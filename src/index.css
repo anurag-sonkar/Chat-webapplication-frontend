@@ -50,3 +50,14 @@ body {
   background-color: #357abd;
   /* Darker color when hovering */
 }
+
+
+/*profile*/
+.profile-avatar-preview{
+  background-image: url('/assets/profile-placeholder.jpeg');
+  background-position: center center;
+  height: 9.3rem;
+  width: 9.3rem;
+  border-radius: 100%;
+
+}

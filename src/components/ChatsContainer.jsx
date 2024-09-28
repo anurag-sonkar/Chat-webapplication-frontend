@@ -5,20 +5,13 @@ import { FaCircleNotch } from "react-icons/fa";
 import { MdGroups } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
-import Notification from './Notifications';
 import Notifications from './Notifications';
 import ChatMenu from './ChatMenu';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaUserFriends } from "react-icons/fa";
 import { MdPersonSearch } from "react-icons/md";
 import { Avatar, Space } from 'antd';
-import Card from './Card';
-
-{/* <div className="avatar">
-  <div className="w-24 rounded-full">
-    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-  </div>
-</div> */}
+import { Link, Outlet } from 'react-router-dom';
 
 const { Header, Sider, Content } = Layout;
 
@@ -67,27 +60,27 @@ const ChatsContainer = () => {
                 {
                   key: 'chats',
                   icon: <BsFillChatSquareTextFill style={{ fontSize: '22px' }} />,
-                  label: 'Chats',
+                  label: <Link to='/chat'>Chats</Link>,
                 },
                 {
                   key: 'status',
                   icon: <FaCircleNotch style={{ fontSize: '22px' }} />,
-                  label: 'Status',
+                  label: <Link to='/chat/status'>Status</Link>,
                 },
                 {
                   key: 'groups',
                   icon: <MdGroups style={{ fontSize: '22px' }} />,
-                  label: 'groups',
+                  label: <Link to='/chat/groups'>Groups</Link>,
                 },
                 {
                   key: 'requests',
                   icon: <FaUserFriends style={{ fontSize: '22px' }} />,
-                  label: 'friend requests',
+                  label: <Link to='/chat/friend-requests'>Friend Requests</Link>,
                 },
                 {
-                  key: 'search',
+                  key: 'search', 
                   icon: <MdPersonSearch style={{ fontSize: '22px' }} />,
-                  label: 'Search',
+                  label: <Link to='/chat/search-users'>Friend Requests</Link>,
                 },
               ]}
             /></div>
@@ -106,9 +99,9 @@ const ChatsContainer = () => {
                   label: 'Settings',
                 },
                 {
-                  key: 'avatar',
+                  key: 'profile',
                   icon: <Avatar size={25} icon={<img src='https://avatar.iran.liara.run/public/4' className='w-25 h-25' />} />,
-                  label: 'Avatar',
+                  label: <Link to='/chat/profile'>Profile</Link>,
                 },
 
               ]}
@@ -148,39 +141,7 @@ const ChatsContainer = () => {
           }}
         >
           {/* Content */}
-          <div>
-          {/* Search input box -1 for friends only */}
-            <label className="input input-bordered flex items-center gap-2">
-              <input type="text" className="grow" placeholder="Search" />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="h-4 w-4 opacity-70">
-                <path
-                  fillRule="evenodd"
-                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                  clipRule="evenodd" />
-              </svg>
-            </label>
-
-            {/* Chat card */}
-            <div className='custom-scrollbar'>
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-            </div>
-
-          </div>
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
