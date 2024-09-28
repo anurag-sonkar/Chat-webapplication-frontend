@@ -61,3 +61,37 @@ body {
   border-radius: 100%;
 
 }
+
+/* auth */
+.auth {
+  height: 100vh;
+  width: 100vw;
+  background-image: url('/assets/bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Custom Tabs */
+.custom-tabs .ant-tabs-nav-list {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.custom-tabs .ant-tabs-tab {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.custom-tabs .ant-tabs-tab-btn {
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.3rem;
+  padding: 0.3rem 0;
+}

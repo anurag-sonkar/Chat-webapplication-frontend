@@ -2,6 +2,29 @@ import React from 'react'
 import Notification from '../components/Notifications';
 import Card from '../components/Card';
 
+const dummyCardData = [
+    {
+        name: "Anurag Sonkar",
+        bio: "can't talk whatsapp only",
+        time: new Date().toLocaleTimeString(),
+        status: "online",
+        imgurl : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
+    },
+    {
+        name: "Atul Sachan",
+        bio: "enjoy your life",
+        time: new Date().toLocaleTimeString(),
+        status: "offline",
+        imgurl : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
+    },
+    {
+        name: "Varun Yadav",
+        bio: "can't talk whatsapp only",
+        time: new Date().toLocaleTimeString(),
+        status: "online",
+        imgurl : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
+    },
+]
 
 function FriendsChats() {
     return (
@@ -23,17 +46,9 @@ function FriendsChats() {
 
             {/* Chat card */}
             <div className='custom-scrollbar'>
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                {
+                    dummyCardData?.length > 0 && dummyCardData.map((item, index) => <Card key={index} {...item} />)
+                }
             </div>
 
         </div>

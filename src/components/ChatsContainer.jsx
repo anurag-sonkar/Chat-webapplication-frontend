@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Button, Layout, Menu, theme } from 'antd';
 import { BsFillChatSquareTextFill } from "react-icons/bs";
 import { FaCircleNotch } from "react-icons/fa";
@@ -12,6 +12,7 @@ import { FaUserFriends } from "react-icons/fa";
 import { MdPersonSearch } from "react-icons/md";
 import { Avatar, Space } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
+import Loader from './Loader';
 
 const { Header, Sider, Content } = Layout;
 
@@ -38,6 +39,8 @@ const ChatsContainer = () => {
     setSelectedKey(key);
     localStorage.setItem("selectedKey", JSON.stringify(key));
   };
+
+  
 
   return (
     <Layout className='h-screen'>
@@ -80,7 +83,7 @@ const ChatsContainer = () => {
                 {
                   key: 'search', 
                   icon: <MdPersonSearch style={{ fontSize: '22px' }} />,
-                  label: <Link to='/chat/search-users'>Friend Requests</Link>,
+                  label: <Link to='/chat/search-users'>Search Users</Link>,
                 },
               ]}
             /></div>
@@ -121,7 +124,7 @@ const ChatsContainer = () => {
           }}
         >
           {/* Header left section: Chats title */}
-          <h1 className='text-3xl font-bold'>Chats</h1>
+          <h1 className='text-3xl font-bold'>{selectedKey.toUpperCase()}</h1>
 
           {/* Header right section: Notification */}
           <div className='flex items-center space-x-4'>  {/* Flexbox to align Notification */}
@@ -141,7 +144,9 @@ const ChatsContainer = () => {
           }}
         >
           {/* Content */}
-          <Outlet />
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
         </Content>
       </Layout>
     </Layout>
