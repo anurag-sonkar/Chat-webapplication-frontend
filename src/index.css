@@ -64,7 +64,7 @@ body {
 
 /* auth */
 .auth {
-  height: 100vh;
+  height: 100vh;  
   width: 100vw;
   background-image: url('/assets/bg.jpg');
   background-size: cover;
@@ -93,5 +93,50 @@ body {
   text-align: center;
   font-weight: 600;
   font-size: 1.3rem;
-  padding: 0.3rem 0;
+}
+
+/**/
+.auth-form{
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap:0.4rem;
+}
+
+.auth-form input::placeholder {
+  color: black;
+}
+
+
+.profile img {
+  border-radius: 50%;
+  width: 6.4rem;
+  height: 6.4rem;
+  object-fit: cover;
+  border: 2px solid #b6b6b6;
+  padding: 2px;
+  display: table;
+  margin: auto;
+}
+
+.title {
+  width: 100%;
+  font-weight: bold;
+  margin: 0;
+  font-size: 2.5rem;
+  min-height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.errorMessage {
+  color: crimson;
+  font-size: 0.8rem;
+  text-align: left;
+  padding: 0 0.8rem;
+  margin-top: -0.6rem;
+  font-weight: 600;
+  width: 100%;
+  /* margin: 0.2rem 0; */
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Tabs } from 'antd';
+import Signup from '../components/Signup';
 
 function Login() {
     return (
@@ -10,25 +11,16 @@ function Login() {
     );
 }
 
-function Signup() {
-    return (
-        <div>
-            <h2>Signup Form</h2>
-            {/* Your Signup Form JSX here */}
-        </div>
-    );
-}
+
 
 function Authentication() {
-    const [size, setSize] = useState('small');
 
     return (
         <div className='auth'>
-            <div className='w-[450px] h-[80vh] bg-gray-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100'>
+            <div className='w-[420px] min-h-[92vh] bg-gray-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 py-1'>
                 <div className='text-center'>
                     <Tabs
                         defaultActiveKey="1"
-                        size={size}
                         className="custom-tabs"
                     >
                         <Tabs.TabPane tab="Login" key="1">
