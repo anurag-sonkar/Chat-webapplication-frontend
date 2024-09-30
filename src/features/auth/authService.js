@@ -9,13 +9,27 @@ const register = async (data) => {
       'Content-Type': 'multipart/form-data'
     }
   });
-
+  
   if (response.status === 201) {
     localStorage.setItem('user-info', JSON.stringify(response?.data?.response))
   }
   console.log(response)
   return response.data
+  
+  
+}
 
+const updateAvatar = async(data)=>{
+  const response = await axios.put(`${auth_base_url}/update-avatar`, data, getConfig());
+  if (response.status === 201) {
+    const data = JSON.parse(localStorage.getItem('user-info'))
+    const localStorageData = {
+      ...data ,
+      avatar : response?.data?.response?.avatar
+    }
+    localStorage.setItem('user-info', JSON.stringify(localStorageData))
+  }
+  return response.data
 
 }
 
@@ -66,7 +80,7 @@ const register = async (data) => {
 
 const authService = {
     // login,signOut,register,forgotPassword,resetPassword
-    register
+  register, updateAvatar
 }
 
 export default authService;

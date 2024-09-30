@@ -13,12 +13,15 @@ import { MdPersonSearch } from "react-icons/md";
 import { Avatar, Space } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
 import Loader from './Loader';
+import { useSelector } from 'react-redux';
 
 const { Header, Sider, Content } = Layout;
 
 const ChatsContainer = () => {
   // const [collapsed, setCollapsed] = useState(true);
   const [selectedKey, setSelectedKey] = useState("chats");
+  const { user } = useSelector(state => state.auth)
+
 
   const {
     token: { colorBgContainer, borderRadiusLG, colorBgLayout }, // light theme 
@@ -103,7 +106,7 @@ const ChatsContainer = () => {
                 },
                 {
                   key: 'profile',
-                  icon: <Avatar size={25} icon={<img src='https://avatar.iran.liara.run/public/4' className='w-25 h-25' />} />,
+                  icon: <Avatar size={25} icon={<img src={user?.avatar?.url} className='w-25 h-25' />} />,
                   label: <Link to='/chat/profile'>Profile</Link>,
                 },
 

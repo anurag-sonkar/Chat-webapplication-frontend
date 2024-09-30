@@ -20,7 +20,7 @@ function Signup() {
     const [imagePreview, setImagePreview] = useState("");
     const [error, setError] = useState({});
     const [catchError, setCatchError] = useState(""); // backend error
-    
+    console.log(image)
     // Creating refs for each label
     const nameLabelRef = useRef(null);
     const emailLabelRef = useRef(null);

@@ -28,6 +28,18 @@ export const register = createAsyncThunk(
   }
 );
 
+export const updateAvatar = createAsyncThunk("auth/avatar" , async(data , thunkAPI)=>{
+  console.log(data)
+  try {
+    const response = await authService.updateAvatar(data);
+    return response;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(
+      error?.response?.data?.message || "Something went wrong"
+    );
+  }
+})
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -67,7 +79,7 @@ const authSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
-        state.user = null;
+        // state.user = null;
         state.successMessage = "";
         state.errorMessage = action.payload || "Registration failed";
 
@@ -78,7 +90,46 @@ const authSlice = createSlice({
           autoClose: 4000,
           theme: "dark"
         });
-      });
+      })
+      .addCase(updateAvatar.pending, (state) => {
+        state.isLoading = true;
+        state.successMessage = "";
+        state.errorMessage = "";
+        toast.loading("Uploading...", {
+          id: "loading-toast",  // Set a specific ID to control this toast
+          position: "top-right",
+          autoClose: false,
+          theme: "dark"
+        });
+      })
+      .addCase(updateAvatar.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload?.response || null;
+        state.successMessage = action.payload?.message || "Avatar uploaded";
+        state.errorMessage = "";
+
+        // Dismiss the loading toast and show success message
+        toast.dismiss("loading-toast");
+        toast.success(state.successMessage, {
+          position: "top-right",
+          autoClose: 4000,
+          theme: "dark"
+        });
+      })
+      .addCase(updateAvatar.rejected, (state, action) => {
+        state.isLoading = false;
+        // state.user = null;
+        state.successMessage = "";
+        state.errorMessage = action.payload || "Avatar upload failed";
+
+        // Dismiss the loading toast and show error message
+        toast.dismiss("loading-toast");
+        toast.error(state.errorMessage, {
+          position: "top-right",
+          autoClose: 4000,
+          theme: "dark"
+        });
+      })
   },
 });
 

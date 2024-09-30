@@ -2,95 +2,98 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FaCamera } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
+import { useDispatch, useSelector } from 'react-redux';
+import { updateAvatar } from '../features/auth/authSlice';
 
 function Profile() {
     const [imagePreview, setImagePreview] = useState(null);  // For preview
-    const [uploadProgress, setUploadProgress] = useState(0); // For progress
+    const { user } = useSelector(state => state.auth);
+    const dispatch = useDispatch();
 
+    // Use the dropzone hook
     const onDrop = useCallback((acceptedFiles) => {
-        acceptedFiles.forEach((file) => {
+        // Only accept the first file if multiple files are dropped
+        if (acceptedFiles.length > 0) {
+            const file = acceptedFiles[0]; // Get the first file
             const reader = new FileReader();
 
-            reader.onabort = () => console.log('file reading was aborted');
-            reader.onerror = () => console.log('file reading has failed');
-            reader.onloadstart = () => setUploadProgress(0);
-            reader.onprogress = (event) => {
-                if (event.lengthComputable) {
-                    const percentCompleted = Math.round((event.loaded * 100) / event.total);
-                    setUploadProgress(percentCompleted);
-                }
-            };
             reader.onload = () => {
-                // Display image preview
-                setImagePreview(URL.createObjectURL(file));
-                setUploadProgress(100);  // Set progress to 100 when done
+                // Display the image preview
+                setImagePreview(reader.result);
+
+                const formData = new FormData();
+                formData.append("avatar", file); // Append the selected file
+                formData.append('public_id', user?.avatar?.public_id); // Append existing public ID if needed
+
+                dispatch(updateAvatar(formData)); // Dispatch the action with the selected file
             };
+            reader.readAsDataURL(file); // Read file as a data URL for image preview
+        }
+    }, [dispatch, user]);
 
-            reader.readAsDataURL(file);  // Read file as a data URL for image preview
-        });
-    }, []);
-
-    const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*' });
+    const { getRootProps, getInputProps } = useDropzone({
+        onDrop,
+        accept: 'image/*',
+        noClick: true, // Disable default click behavior
+        noKeyboard: true // Disable keyboard events
+    });
 
     return (
-        <div className="w-full h-full bg-blue-50 flex flex-col items-center gap-6 py-2 rounded-md">
-            
-
-            {/* Show image preview */}
-            {imagePreview && (
-                <div className="mt-4 rounded-full shadow-lg">
-                    <img
-                        src={imagePreview}
-                        alt="Preview"
-                        style={{ width: 200, height: 200, objectFit: 'cover', borderRadius: '50%' }}
-                    />
-                </div>
-            )}
-
-            {/* Show upload progress */}
-            {uploadProgress > 0 && uploadProgress < 100 && (
-                <div className="mt-4 w-64 bg-gray-300 rounded-full">
-                    <div
-                        className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                        style={{ width: `${uploadProgress}%` }}
-                    >
-                        {uploadProgress}%
-                    </div>
-                </div>
-            )}
-
+        <div className="w-full h-full bg-blue-50 flex flex-col items-center justify-center gap-6 rounded-md">
             {
-                !imagePreview && <div {...getRootProps()} className="w-64 h-64 text-black cursor-pointer rounded-full grid place-items-center ">
-                    <input {...getInputProps()} />
-                    <p className='profile-avatar-preview flex flex-col justify-center items-center text-white relative gap-2'>
-                        <p><FaCamera size={25} /></p>
-                        <p className='max-w-24 text-center font-semibold'>ADD PROFILE PHOTO</p>
-
-                    </p>
-                </div>
+                user?.avatar?.url || imagePreview ? (
+                    <div className='max-w-56 relative'>
+                        <img
+                            src={imagePreview || user.avatar.url}
+                            alt="Profile"
+                            className="w-48 h-48 object-cover rounded-full"
+                        />
+                        <span
+                            className='absolute top-[80%] right-[15%] cursor-pointer'
+                            onClick={() => document.getElementById('file-input').click()} // Trigger click on file input
+                        >
+                            <FaCamera size={30} />
+                        </span>
+                    </div>
+                ) : (
+                    <div className='w-48 h-48 flex items-center justify-center bg-gray-300 rounded-full'>
+                        <span>No Image</span>
+                        <span
+                            className='absolute cursor-pointer'
+                            onClick={() => document.getElementById('file-input').click()} // Trigger click on file input
+                        >
+                            <FaCamera size={30} />
+                        </span>
+                    </div>
+                )
             }
+
+            <input
+                {...getInputProps()}
+                id="file-input"
+                className="hidden" // Hide the input
+            />
 
             {/* other info of user */}
             <div className='w-full px-2 grid gap-2'>
                 <div className='bg-white px-6 shadow-sm rounded-sm flex flex-col gap-2 py-2 '>
                     <h1 className='text-md font-semibold text-blue-800'>Your name</h1>
                     <div className='flex items-center justify-between'>
-                        <p className='text-xs'>Anurag Sonkar</p>
+                        <p className='text-xs'>{user?.name}</p> {/* Show user's name */}
                         <MdEdit size={22} color='#ccc' />
                     </div>
                 </div>
                 <div className='bg-white px-6 shadow-sm rounded-sm flex flex-col gap-2 py-2'>
                     <h1 className='text-md font-semibold text-blue-800'>Your email</h1>
                     <div className='flex items-center justify-between'>
-                        <p className='text-xs'>anuragsonkar053@gmail.com</p>
+                        <p className='text-xs'>{user?.email}</p> {/* Show user's email */}
                         <MdEdit size={22} color='#ccc' />
                     </div>
                 </div>
-                
                 <div className='bg-white px-6 shadow-sm rounded-sm flex flex-col gap-2 py-2'>
                     <h1 className='text-md font-semibold text-blue-800'>About</h1>
                     <div className='flex items-center justify-between'>
-                        <p className='text-xs'>Can't talk Whatsapp only</p>
+                        <p className='text-xs'>Can't talk, WhatsApp only</p>
                         <MdEdit size={22} color='#ccc' />
                     </div>
                 </div>
