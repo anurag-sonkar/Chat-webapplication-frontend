@@ -13,7 +13,7 @@ const register = async (data) => {
   if (response.status === 201) {
     localStorage.setItem('user-info', JSON.stringify(response?.data?.response))
   }
-  console.log(response)
+  // console.log(response)
   return response.data
   
   
@@ -33,16 +33,20 @@ const updateAvatar = async(data)=>{
 
 }
 
-// const login = async (userData) => {
-//     // console.log(userData)
-//     const response = await axios.post(`${auth_base_url}/auth/admin-login`, userData);
-//     console.log(response)
+const login = async (data) => {
+  const response = await axios.post(`${auth_base_url}/login`, data);
+console.log(response)
+  if (response.status === 200) {
+    localStorage.setItem('user-info', JSON.stringify(response?.data?.response))
+  }
+  // console.log(response)
+  return response.data
 
-//     if(response.status === 201){
-//         localStorage.setItem('user',JSON.stringify(response.data))
-//     }
-//     return response.data.result; 
-// }
+
+}
+
+
+
 
 // const signOut = async ()=>{
 //     const response = await axios.put(`${auth_base_url}/logout`,{}, getConfig())
@@ -79,8 +83,8 @@ const updateAvatar = async(data)=>{
 
 
 const authService = {
-    // login,signOut,register,forgotPassword,resetPassword
-  register, updateAvatar
+    
+  register, updateAvatar, login
 }
 
 export default authService;

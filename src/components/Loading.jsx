@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Loading() {
+function Loading({color}) {
     return (
 
-        <span className="loading loading-dots loading-lg"></span>
+        <span className={`loading loading-dots loading-lg bg-[${color !== undefined ? color : ""}]`}></span>
     )
 }
 

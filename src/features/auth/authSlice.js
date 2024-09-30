@@ -40,6 +40,21 @@ export const updateAvatar = createAsyncThunk("auth/avatar" , async(data , thunkA
   }
 })
 
+export const login = createAsyncThunk(
+  "auth/login",
+  async (data, thunkAPI) => {
+    try {
+      const response = await authService.login(data);
+      return response;
+    } catch (error) {
+      // Use `rejectWithValue` to return error message to reducer
+      return thunkAPI.rejectWithValue(
+        error?.response?.data?.message || "Something went wrong"
+      );
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -47,7 +62,7 @@ const authSlice = createSlice({
     reset: (state) => {
       state.isLoading = false;
       state.successMessage = "",
-        state.errorMessage = "";
+      state.errorMessage = "";
     },
   },
   extraReducers: (builder) => {
@@ -121,6 +136,45 @@ const authSlice = createSlice({
         // state.user = null;
         state.successMessage = "";
         state.errorMessage = action.payload || "Avatar upload failed";
+
+        // Dismiss the loading toast and show error message
+        toast.dismiss("loading-toast");
+        toast.error(state.errorMessage, {
+          position: "top-right",
+          autoClose: 4000,
+          theme: "dark"
+        });
+      })
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+        state.successMessage = "";
+        state.errorMessage = "";
+        toast.loading("logging...", {
+          id: "loading-toast",  // Set a specific ID to control this toast
+          position: "top-right",
+          autoClose: false,
+          theme: "dark"
+        });
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload?.response || null;
+        state.successMessage = action.payload?.message || "Login successful";
+        state.errorMessage = "";
+
+        // Dismiss the loading toast and show success message
+        toast.dismiss("loading-toast");
+        toast.success(state.successMessage, {
+          position: "top-right",
+          autoClose: 4000,
+          theme: "dark"
+        });
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        // state.user = null;
+        state.successMessage = "";
+        state.errorMessage = action.payload || "login failed";
 
         // Dismiss the loading toast and show error message
         toast.dismiss("loading-toast");

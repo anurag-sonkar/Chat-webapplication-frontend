@@ -3,16 +3,7 @@ import { Tabs } from 'antd';
 import Signup from '../components/Signup';
 import { useSelector } from 'react-redux';
 import Loading from '../components/Loading';
-
-function Login() {
-    return (
-        <div>
-            <h2>Login Form</h2>
-            {/* Your Login Form JSX here */}
-        </div>
-    );
-}
-
+import Login from '../components/Login';
 
 
 function Authentication() {

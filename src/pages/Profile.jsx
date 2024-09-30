@@ -4,10 +4,11 @@ import { FaCamera } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { updateAvatar } from '../features/auth/authSlice';
+import Loading from '../components/Loading';
 
 function Profile() {
     const [imagePreview, setImagePreview] = useState(null);  // For preview
-    const { user } = useSelector(state => state.auth);
+    const { user  ,isLoading} = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
     // Use the dropzone hook
@@ -39,7 +40,7 @@ function Profile() {
     });
 
     return (
-        <div className="w-full h-full bg-blue-50 flex flex-col items-center justify-center gap-6 rounded-md">
+        <div className="w-full h-full bg-blue-50 flex flex-col items-center justify-center gap-6 rounded-md ">
             {
                 user?.avatar?.url || imagePreview ? (
                     <div className='max-w-56 relative'>
@@ -48,6 +49,9 @@ function Profile() {
                             alt="Profile"
                             className="w-48 h-48 object-cover rounded-full"
                         />
+                        {
+                            isLoading && <Loading color='white'/>
+                        }
                         <span
                             className='absolute top-[80%] right-[15%] cursor-pointer'
                             onClick={() => document.getElementById('file-input').click()} // Trigger click on file input
@@ -72,6 +76,7 @@ function Profile() {
                 {...getInputProps()}
                 id="file-input"
                 className="hidden" // Hide the input
+                disabled={isLoading}
             />
 
             {/* other info of user */}
