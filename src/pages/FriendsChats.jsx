@@ -46,9 +46,9 @@ function FriendsChats() {
 
             {/* Chat card */}
             <div className='custom-scrollbar'>
-                {
+                {/* {
                     dummyCardData?.length > 0 && dummyCardData.map((item, index) => <Card key={index} {...item} />)
-                }
+                } */}
             </div>
 
         </div>
