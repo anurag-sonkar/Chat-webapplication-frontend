@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Tabs } from 'antd';
 import Signup from '../components/Signup';
+import { useSelector } from 'react-redux';
+import Loading from '../components/Loading';
 
 function Login() {
     return (
@@ -14,9 +16,13 @@ function Login() {
 
 
 function Authentication() {
+    const { isLoading } = useSelector(state => state.auth)
 
     return (
-        <div className='auth'>
+        <div className='auth relative'>
+            {
+                isLoading && <Loading />
+            }
             <div className='w-[420px] min-h-[92vh] bg-gray-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 py-1'>
                 <div className='text-center'>
                     <Tabs

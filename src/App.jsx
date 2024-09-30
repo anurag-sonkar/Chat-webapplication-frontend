@@ -1,9 +1,12 @@
-import React, { lazy, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { lazy, useEffect, useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import ChatsContainer from './components/ChatsContainer';
 import MessageContainer from './components/MessageContainer';
 import Authentication from './pages/Authentication';
-
+import { Toaster } from 'react-hot-toast';
+import ProtectedRoute from './routing/ProtectedRoute';
+import { useSelector } from 'react-redux';
+import PublicRoute from './routing/PublicRoute';
 const FriendsChats = lazy(
   () => import('./pages/FriendsChats')
 )
@@ -25,14 +28,17 @@ const Profile = lazy(
 
 
 function App() {
-  const [user , setUser] = useState(false)
+  const {user} = useSelector(state => state.auth)
+  
   return (
     <div className='flex'>
+      <Toaster position="top-right" reverseOrder={false} />
       <Routes>
-        <Route path='/' element={<Authentication />} />
+      
+        <Route path='/' element={<PublicRoute><Authentication /></PublicRoute>} />
 
         {/* Left side - ChatsContainer */}
-        <Route path='chat' element={<ChatsContainer/>}>
+        <Route path='chat' element={<ProtectedRoute><ChatsContainer/></ProtectedRoute>}>
           <Route index element={<FriendsChats/>} />
           <Route path='status' element={<Status/>} />
           <Route path='groups' element={<GroupChats/>} />

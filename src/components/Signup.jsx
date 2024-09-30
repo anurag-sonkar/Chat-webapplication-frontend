@@ -1,22 +1,26 @@
-import React, { useEffect, useState , useRef} from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { IoMale } from "react-icons/io5";
 import { GiFemale } from "react-icons/gi";
-// import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const { isLoading, user, } = useSelector(state => state.auth)
 
     // states
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [gender , setGender] = useState('male')
+    const [gender, setGender] = useState('male')
     const [image, setImage] = useState(null);
     const [imagePreview, setImagePreview] = useState("");
     const [error, setError] = useState({});
     const [catchError, setCatchError] = useState(""); // backend error
-
+    
     // Creating refs for each label
     const nameLabelRef = useRef(null);
     const emailLabelRef = useRef(null);
@@ -37,7 +41,7 @@ function Signup() {
             newErrors.passwordError = "Password is required";
         } if (!confirmPassword) {
             newErrors.confirmPasswordError = "Confirm your password";
-        }else if(password !== confirmPassword){
+        } else if (password !== confirmPassword) {
             newErrors.confirmPasswordError = "Password not Matched";
 
         }
@@ -96,68 +100,28 @@ function Signup() {
         formData.append("email", email);
         formData.append("password", password);
         formData.append("cpassword", confirmPassword);
-        formData.append('gender' , gender)
+        formData.append('gender', gender)
 
         if (image) {
-            formData.append("photo", image);
+            formData.append("avatar", image);
         }
 
-        console.log(name , email , password , confirmPassword , gender , image)
+        if (catchError) return
 
-        // if(catchError) return
+        console.log(name, email, password, confirmPassword, gender, image)
 
-        // const registerPromise = dispatch(register(formData)).unwrap();
+        const registerPromise = dispatch(register(formData)).unwrap();
+        registerPromise.then(
+            ()=>{
+                if(user) navigate('/chat')
+            }
+        )
+    }
 
-        // toast.promise(
-        //     registerPromise,
-        //     {
-        //         pending: "Creating Account...",
-        //         success: "Registered Successfully!",
-        //         error: "Registration failed!",
-        //     },
-        //     {
-        //         position: "top-right",
-        //         autoClose: 5000,
-        //         hideProgressBar: false,
-        //         closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //         progress: undefined,
-        //         theme: "dark",
-        //         transition: Bounce,
-        //     }
-        // );
-
-        // registerPromise
-        //     .then(() => {
-        //         if (isLargeScreen) {
-        //             setSignIn(true);
-        //         } else {
-        //             navigate("/login");
-        //         }
-        //         toast.success(
-        //             `${(registerState?.name) || "You can"} login now`,
-        //             {
-        //                 position: "top-right",
-        //                 autoClose: 5000,
-        //                 hideProgressBar: false,
-        //                 closeOnClick: true,
-        //                 pauseOnHover: true,
-        //                 draggable: true,
-        //                 progress: undefined,
-        //                 theme: "dark",
-        //                 transition: Bounce,
-        //             }
-        //         );
-        //     })
-        //     .catch((error) => {
-        //         // console.error("Caught error:", error); 
-        //         setCatchError(error.response.data.error || "An unexpected error occurred");
-        //     });
-    };
 
     return (
-        <div className='auth-form'>
+        <div className='auth-form relative'>
+        
             {image == null ? (
                 <div className='flex flex-col gap-2 py-1 '>
                     <h1 className="text-3xl font-bold">Hello, Friend!</h1>
@@ -179,7 +143,7 @@ function Signup() {
                     <path
                         d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
                 </svg>
-                <input type="text" className="grow " placeholder="Email" value={email}
+                <input disabled={isLoading} type="text" className="grow " placeholder="Email" value={email}
                     name="email"
                     onChange={(e) => setEmail(e.target.value)} />
             </label>
@@ -197,7 +161,7 @@ function Signup() {
                     <path
                         d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
                 </svg>
-                <input type="text" className="grow " placeholder="Username" value={name}
+                <input disabled={isLoading} type="text" className="grow " placeholder="Username" value={name}
                     name="name"
                     onChange={(e) => setName(e.target.value)} />
             </label>
@@ -217,7 +181,7 @@ function Signup() {
                         d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
                         clipRule="evenodd" />
                 </svg>
-                <input type="text" className="grow " placeholder="Password" value={password}
+                <input disabled={isLoading} type="text" className="grow " placeholder="Password" value={password}
                     name="password"
                     onChange={(e) => setPassword(e.target.value)} />
             </label>
@@ -237,7 +201,7 @@ function Signup() {
                         d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
                         clipRule="evenodd" />
                 </svg>
-                <input type="password" className="grow " placeholder="Confirm Password" value={confirmPassword}
+                <input disabled={isLoading} type="password" className="grow " placeholder="Confirm Password" value={confirmPassword}
                     name="confirmPassword"
                     onChange={(e) => setConfirmPassword(e.target.value)} />
             </label>
@@ -250,24 +214,31 @@ function Signup() {
                 <div className="form-control">
                     <label className="label cursor-pointer">
                         <span className="label-text mx-2 text-lg flex items-center gap-1"><IoMale size={28} /> Male</span>
-                        <input type="radio" name="gender" className="radio checked:bg-red-500" defaultChecked value="male" onChange={(e)=>setGender(e.target.value)}/>
+                        <input disabled={isLoading} type="radio" name="gender" className="radio checked:bg-red-500" defaultChecked value="male" onChange={(e) => setGender(e.target.value)} />
                     </label>
                 </div>
                 <div className="form-control">
                     <label className="label cursor-pointer">
-                        <span className="label-text mx-2 text-lg flex items-center gap-1"><GiFemale size={28}  />Female</span>
-                        <input type="radio" name="gender" value="female" className="radio checked:bg-blue-500" onChange={(e) =>setGender(e.target.value)} />
+                        <span className="label-text mx-2 text-lg flex items-center gap-1"><GiFemale size={28} />Female</span>
+                        <input disabled={isLoading} type="radio" name="gender" value="female" className="radio checked:bg-blue-500" onChange={(e) => setGender(e.target.value)} />
                     </label>
                 </div>
             </div>
 
             {/* upload */}
-            <input ref={fileLabelRef} type="file" onChange={handleImageChange} className="file-input file-input-bordered file-input-md w-full max-w-md" />
+            <input disabled={isLoading} ref={fileLabelRef} type="file" onChange={handleImageChange} className="file-input file-input-bordered file-input-md w-full max-w-md" />
             {catchError && (
                 <div className="errorMessage" style={{ padding: "2px 6px", fontSize: "10px , " }}>{catchError}</div> // Ensure catchError is displayed here
             )}
 
-            <button className="btn btn-warning" onClick={handleSignup}>Register</button>
+            <button disabled={isLoading} className="btn btn-warning" onClick={handleSignup}>Register</button>
+
+            {/* <div className="text-center px-1 w-full">
+                <Link to="/login">
+                    <span className='font-semibold'>Already have an account?</span>{" "}
+                    <span className="text-blue-600 font-bold">Login</span>
+                </Link>
+            </div> */}
         </div>
     )
 }
