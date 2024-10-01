@@ -56,7 +56,7 @@ function App() {
         // new frined request notification
         socket.on('notification' , (data)=>{
           console.log(data)
-          dispatch(setNotification(data.response))
+          dispatch(setNotification(data))
         })
 
         // socket.on('new-message', (newMessage) => {

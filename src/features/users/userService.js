@@ -17,10 +17,19 @@ const sendFriendRequest = async (userId) => {
   return response?.data
 }
 
+const acceptFriendRequest = async (requestId) => {
+  const data = {
+    requestId , accept : true
+  }
+  const response = await axios.put(`${user_base_url}/acceptrequest`, data ,getConfig())
+  console.log(response)
+  return
+}
+
 
 const userService = {
   search
-  , sendFriendRequest
+  , sendFriendRequest, acceptFriendRequest
 }
 
 export default userService;

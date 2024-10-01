@@ -5,12 +5,12 @@ import notificationService from "./notificationService";
 const initialState = {
   notifications: [],
   isLoading: false,
-  // successMessage: "",
+  successMessage: "",
   // errorMessage: ""
 };
 
 export const getAllNotifications = createAsyncThunk(
-  "user/getAllNotifications",
+  "notification/getAllNotifications",
   async (_, thunkAPI) => {
     try {
       const response = await notificationService.getAllNotifications();
@@ -25,13 +25,19 @@ export const getAllNotifications = createAsyncThunk(
 );
 
 
-
 const notificationSlice = createSlice({
   name: "notification",
   initialState,
   reducers: {
     setNotification : (state , action)=>{
-      state.notifications.push(action.payload)
+      const {message , response} = action.payload
+      state.notifications.push(response)
+      state.successMessage = message
+      toast.success(state.successMessage, {
+        position: "top-center",
+        autoClose: 8000,
+        theme: "dark"
+      });
     }
   },
   extraReducers: (builder) => {
@@ -50,16 +56,16 @@ const notificationSlice = createSlice({
       .addCase(getAllNotifications.fulfilled, (state, action) => {
         state.isLoading = false;
         state.notifications = action.payload?.response || [];
-        // state.successMessage = action.payload?.message || "Search successfully";
+        state.successMessage = action.payload?.message || "new notification";
         // state.errorMessage = "";
 
         // Dismiss the loading toast and show success message
         // toast.dismiss("loading-toast");
-        // toast.success(state.successMessage, {
-        //   position: "top-right",
-        //   autoClose: 4000,
-        //   theme: "dark"
-        // });
+        toast.success(state.successMessage, {
+          position: "top-right",
+          autoClose: 8000,
+          theme: "dark"
+        });
       })
       .addCase(getAllNotifications.rejected, (state, action) => {
         state.isLoading = false;

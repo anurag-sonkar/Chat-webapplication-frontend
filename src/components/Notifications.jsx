@@ -4,11 +4,16 @@ import { Dropdown, Space ,Button , Avatar} from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllNotifications } from '../features/notifications/notificationSlice';
 import { Link } from 'react-router-dom';
+import { acceptFriendRequest } from '../features/users/userSlice';
 
 function Notifications({children}) {
   const dispatch = useDispatch()
   const { notifications } = useSelector(state => state.notification)
   console.log(notifications)
+
+  const handleAcceptFriendRequest = (id)=>{
+    dispatch(acceptFriendRequest(id))
+  }
 
   useEffect(
     ()=>{
@@ -31,7 +36,7 @@ function Notifications({children}) {
 
           {/* Accept and Reject Buttons */}
           <div className="flex space-x-2">
-            <Button type="primary" size="small">
+            <Button type="primary" size="small" onClick={() => handleAcceptFriendRequest(notification._id)}>
               Accept
             </Button>
             <Button type="default" size="small" danger>
@@ -59,7 +64,7 @@ function Notifications({children}) {
       placement="bottomRight"
       overlayStyle={{ width: '20rem' }}
     >
-      <a onClick={(e) => e.preventDefault()} className="relative inline-block">
+      <Link onClick={(e) => e.preventDefault()} className="relative inline-block">
         <Space>
           {/* Bell Icon with Notification Count */}
           <div className="relative">
@@ -71,7 +76,7 @@ function Notifications({children}) {
             )}
           </div>
         </Space>
-      </a>
+      </Link>
     </Dropdown>
   )
 }

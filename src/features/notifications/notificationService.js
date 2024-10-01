@@ -11,7 +11,7 @@ const getAllNotifications = async () => {
 
 
 const notificationService = {
-  getAllNotifications
+  getAllNotifications, 
 }
 
 export default notificationService;

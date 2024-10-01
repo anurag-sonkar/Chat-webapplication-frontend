@@ -43,6 +43,22 @@ export const sendFriendRequest = createAsyncThunk(
   }
 );
 
+export const acceptFriendRequest = createAsyncThunk(
+  "user/acceptFriendRequest",
+  async (requestId, thunkAPI) => {
+    try {
+      const response = await userService.acceptFriendRequest(requestId);
+      return response;
+    } catch (error) {
+      // Use `rejectWithValue` to return error message to reducer
+      return thunkAPI.rejectWithValue(
+        error?.response?.data?.message || "Something went wrong"
+      );
+    }
+  }
+);
+
+
 const userSlice = createSlice({
   name: "user",
   initialState,
