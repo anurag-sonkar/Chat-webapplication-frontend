@@ -5,7 +5,7 @@ import MessageContainer from './components/MessageContainer';
 import Authentication from './pages/Authentication';
 import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './routing/ProtectedRoute';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PublicRoute from './routing/PublicRoute';
 const FriendsChats = lazy(
   () => import('./pages/FriendsChats')
@@ -26,10 +26,48 @@ const Profile = lazy(
   () => import('./pages/Profile')
 )
 
+import { io } from 'socket.io-client'
+import { setOnlineUsers } from './features/users/userSlice';
+import { setNotification } from './features/notifications/notificationSlice';
+
+
 
 function App() {
+  const [socket, setSocket] = useState(null)
+
   const {user} = useSelector(state => state.auth)
-  
+  const dispatch = useDispatch()
+
+  useEffect(
+    () => {
+      if (user) {
+        const socket = io('http://localhost:8000', {
+          query: {
+            userId: user?._id
+          }
+        })
+        // dispatch(setSocket(socket))
+        setSocket(socket)
+        socket.on('onlineUsers', (onlineUsers) => {
+          dispatch(setOnlineUsers(onlineUsers))
+        })
+
+
+        // new frined request notification
+        socket.on('notification' , (data)=>{
+          console.log(data)
+          dispatch(setNotification(data.response))
+        })
+
+        // socket.on('new-message', (newMessage) => {
+        //   dispatch(setNewMessage(newMessage))
+        // })
+        return () => socket.close()
+      }
+
+    }, [user]
+  )
+
   return (
     <div className='flex'>
       <Toaster position="top-right" reverseOrder={false} />

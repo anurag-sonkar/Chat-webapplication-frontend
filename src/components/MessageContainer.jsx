@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { setSelectedUser } from '../features/users/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { sendFriendRequest, setSelectedUser } from '../features/users/userSlice'
 
 function MessageContainer() {
   const { user } = useSelector(state => state.auth)
   const { searchedSelectedUser } = useSelector(state => state.user)
   const { avatar, name } = user
+  const dispatch = useDispatch()
+  
+  const handleSendFriendRequest = ()=>{
+    dispatch(sendFriendRequest(searchedSelectedUser._id)) 
+  }
 
   return (
     <div className='bg-blue-50 w-[60%] h-[100vh] grid place-items-center'>
@@ -27,7 +32,7 @@ function MessageContainer() {
             </div> : <div className='grid place-items-center gap-2'>
               <div className='text-5xl font-semibold'>{searchedSelectedUser?.name}</div>
               <div className='font-semibold text-gray-700'>{searchedSelectedUser?.email}</div>
-                <button className="btn btn-success w-full text-xl">Send Request</button>
+                <button className="btn btn-success w-full text-xl" onClick={handleSendFriendRequest}>Send Request</button>
 
             </div>
           }

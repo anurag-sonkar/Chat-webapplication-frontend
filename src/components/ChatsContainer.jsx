@@ -131,8 +131,8 @@ const ChatsContainer = () => {
 
           {/* Header right section: Notification */}
           <div className='flex items-center space-x-4'>  {/* Flexbox to align Notification */}
-            <div className='mt-5'> <Notifications ><IoIosNotifications size={24} />  </Notifications></div>
-            <div className='mt-5'><ChatMenu><BsThreeDotsVertical size={24} /></ChatMenu></div>
+            <div className='mt-5'> <Notifications ><IoIosNotifications size={35} />  </Notifications></div>
+            <div className='mt-5'><ChatMenu><BsThreeDotsVertical size={30} /></ChatMenu></div>
             {/* Adjust size as needed */}
           </div>
         </Header>
