@@ -1,13 +1,24 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSelectedUser } from '../features/users/userSlice';
+import { resetSelectedUser, setSelectedUser } from '../features/users/userSlice';
+import { useLocation } from 'react-router-dom';
+import { resetSelectedChat, setFriendChat } from '../features/chat/chatSlice';
 
-function Card({_id, name, avatar,email }) {
+function Card({ _id, name, avatar, email }) {
     const dispatch = useDispatch()
     const { onlineUsers } = useSelector(state => state.user)
+    const { pathname } = useLocation()
 
     const setUser = (id) => {
-        dispatch(setSelectedUser({ type: "searched-user" , id}))
+        if (pathname === '/chat/search-users'){
+            dispatch(setSelectedUser(id))
+                dispatch(resetSelectedChat())
+
+        }else if(pathname === '/chat'){
+            dispatch(setFriendChat(id))
+                dispatch(resetSelectedUser())
+
+        }
     }
     return (
         <div className='grid gap-2 mt-2 mx-1 cursor-pointer' onClick={() => setUser(_id)}>

@@ -5,7 +5,7 @@ import { getConfig } from "../../utils/config";
 
 const getAllNotifications = async () => {
   const response = await axios.get(`${user_base_url}/getmynotifications`, getConfig())
-  console.log(response)
+  // console.log(response)
   return response?.data
 }
 

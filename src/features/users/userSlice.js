@@ -5,7 +5,6 @@ import userService from "./userService";
 const initialState = {
   users: [],
   searchedSelectedUser : null,
-  friendChatSelect : {},
   onlineUsers : [],
   isLoading: false,
   successMessage: "",
@@ -65,19 +64,12 @@ const userSlice = createSlice({
   reducers: {
     setSelectedUser: (state, action) => {
 
-      const { type, id } = action.payload;
+      const selectedUser = state.users.find((user) => user._id === action.payload);
+      state.searchedSelectedUser = selectedUser;
 
-      const selectedUser = state.users.find((user) => user._id === id);
-
-      switch (type) {
-        case 'searched-user':
-          state.searchedSelectedUser = selectedUser;
-          break;
-        case 'chat-friend':
-          state.friendChatSelect = selectedUser;
-          break;
-       
-      }
+    },
+    resetSelectedUser : (state , action)=>{
+      state.searchedSelectedUser = null
     },
     setOnlineUsers: (state, action) => {
       state.onlineUsers = action.payload;
@@ -167,5 +159,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setSelectedUser, setOnlineUsers } = userSlice.actions;
+export const { setSelectedUser, setOnlineUsers, resetSelectedUser } = userSlice.actions;
 export default userSlice.reducer;

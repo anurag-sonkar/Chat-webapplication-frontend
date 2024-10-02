@@ -9,7 +9,7 @@ import { acceptFriendRequest } from '../features/users/userSlice';
 function Notifications({children}) {
   const dispatch = useDispatch()
   const { notifications } = useSelector(state => state.notification)
-  console.log(notifications)
+  // console.log(notifications)
 
   const handleAcceptFriendRequest = (id)=>{
     dispatch(acceptFriendRequest(id))
