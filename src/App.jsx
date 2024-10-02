@@ -28,7 +28,8 @@ const Profile = lazy(
 
 import { io } from 'socket.io-client'
 import { setOnlineUsers } from './features/users/userSlice';
-import { setNotification } from './features/notifications/notificationSlice';
+import { getAllNotifications, setNotification } from './features/notifications/notificationSlice';
+import { getAllChats } from './features/chat/chatSlice';
 
 
 
@@ -59,6 +60,13 @@ function App() {
           dispatch(setNotification(data))
         })
 
+
+        // accept request - chat refetch
+        socket.on('refetch-chat' , (data)=>{
+          console.log(data)
+          dispatch(getAllChats())
+          dispatch(getAllNotifications())
+        })
         // socket.on('new-message', (newMessage) => {
         //   dispatch(setNewMessage(newMessage))
         // })

@@ -8,21 +8,22 @@ import { useDispatch, useSelector } from 'react-redux'
 
 function MessageInput() {
     const [message , setMessage] = useState('')
-    // const { selectedUser } = useSelector(state => state.users)
+    const { selectedChat } = useSelector(state => state.chat)
+
 
     // const { user } = useSelector(state => state.auth)
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-    // const handleSendMessage = (e)=>{
-    //     e.preventDefault()
-    //     if (message.trim() === '') return // Prevent sending empty messages
-    //     const messagePromise = dispatch(sendMessage({id : selectedUser?._id , message})).unwrap()
-    //     messagePromise.then(() => setMessage(""))
+    const handleSendMessage = (e)=>{
+        e.preventDefault()
+        if (message.trim() === '') return // Prevent sending empty messages
+        // const messagePromise = dispatch(sendMessage({id : selectedUser?._id , message})).unwrap()
+        messagePromise.then(() => setMessage(""))
 
-    // }
+    }
 
     return (
-        <form className='bg-[#F0F2F5] flex items-center px-4 py-2' >
+        <form className='bg-[#F0F2F5] flex items-center px-4 py-2' onSubmit={handleSendMessage} >
             <div className='flex gap-3 pr-2'>
                 <div className='cursor-pointer'><FaFaceSmile size={25} /></div>
                 <div className='cursor-pointer'><FaPlus size={25} /></div>

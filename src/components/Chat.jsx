@@ -13,7 +13,7 @@ function Chat() {
 
   
   return (
-    <div className='h-full w-full'>
+    <div className='h-full w-full  border-l'>
         {/* chat - header */}
       <div className='flex justify-between bg-[#F0F2F5] px-4 py-2 items-center'>
            <div className='flex items-center gap-4'> {/* left div */}
@@ -37,7 +37,7 @@ function Chat() {
 
         {/* --------------------------------------------------------------- */}
         {/* chat messages */}
-          <div className='h-[80vh] w-full overflow-y-scroll px-4 py-2'>
+          <div className='h-[80vh] w-full bg-white overflow-y-scroll px-4 py-2'>
             <Message position="start"  />
             <Message />
             <Message />
