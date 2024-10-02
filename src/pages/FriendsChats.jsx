@@ -2,32 +2,40 @@ import React, { useEffect } from 'react'
 import Notification from '../components/Notifications';
 import Card from '../components/Card';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllChats } from '../features/chat/chatSlice';
+import { getAllChats } from '../features/chats/chatSlice';
+import { getAllMessages } from '../features/messages/messageSlice';
 
 const dummyCardData = [
     {
-        _id : Date.now(),
+        _id: Date.now(),
         name: "Anurag Sonkar",
-        email : "anuragsonkar0532gmail.com",
+        email: "anuragsonkar0532gmail.com",
         bio: "can't talk whatsapp only",
         time: new Date().toLocaleTimeString(),
         status: "online",
-        avatar : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
+        avatar: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
     },
-    
+
 ]
 
 function FriendsChats() {
-    const {chats} = useSelector(state =>state.chat)
+    const { chats } = useSelector(state => state.chat)
     const dispatch = useDispatch()
 
     console.log(chats)
 
     useEffect(
-        ()=>{
+        () => {
             dispatch(getAllChats())
-        },[]
+        }, []
     )
+
+
+    const handleGetAllMessages = (id)=>{
+        dispatch(getAllMessages(id))
+
+    }
+
     return (
         <div>
             {/* Search input box -1 for friends only */}
@@ -48,9 +56,9 @@ function FriendsChats() {
             {/* Chat card */}
             <div className='custom-scrollbar'>
                 {
-                    chats?.length > 0 && chats.map((chat,index)=>{
-                        if(chat?.isGroupChat === false){
-                            return <Card  key={chat?._id} {...chat?.members?.[0]}/>
+                    chats?.length > 0 && chats.map((chat, index) => {
+                        if (chat?.isGroupChat === false) {
+                            return <div key={chat?._id} onClick={()=>handleGetAllMessages(chat?._id)}><Card  {...chat?.members?.[0]} /></div>
                         }
                     })
                 }

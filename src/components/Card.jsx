@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetSelectedUser, setSelectedUser } from '../features/users/userSlice';
 import { useLocation } from 'react-router-dom';
-import { resetSelectedChat, setFriendChat } from '../features/chat/chatSlice';
+import { resetSelectedChat, setFriendChat } from '../features/chats/chatSlice';
 
 function Card({ _id, name, avatar, email }) {
     const dispatch = useDispatch()
@@ -10,13 +10,13 @@ function Card({ _id, name, avatar, email }) {
     const { pathname } = useLocation()
 
     const setUser = (id) => {
-        if (pathname === '/chat/search-users'){
+        if (pathname === '/chat/search-users') {
             dispatch(setSelectedUser(id))
-                dispatch(resetSelectedChat())
+            dispatch(resetSelectedChat())
 
-        }else if(pathname === '/chat'){
+        } else if (pathname === '/chat') {
             dispatch(setFriendChat(id))
-                dispatch(resetSelectedUser())
+            dispatch(resetSelectedUser())
 
         }
     }

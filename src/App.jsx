@@ -29,14 +29,14 @@ const Profile = lazy(
 import { io } from 'socket.io-client'
 import { setOnlineUsers } from './features/users/userSlice';
 import { getAllNotifications, setNotification } from './features/notifications/notificationSlice';
-import { getAllChats } from './features/chat/chatSlice';
+import { getAllChats } from './features/chats/chatSlice';
 
 
 
 function App() {
   const [socket, setSocket] = useState(null)
 
-  const {user} = useSelector(state => state.auth)
+  const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
   useEffect(
@@ -55,14 +55,14 @@ function App() {
 
 
         // new frined request notification
-        socket.on('notification' , (data)=>{
+        socket.on('notification', (data) => {
           console.log(data)
           dispatch(setNotification(data))
         })
 
 
         // accept request - chat refetch
-        socket.on('refetch-chat' , (data)=>{
+        socket.on('refetch-chat', (data) => {
           console.log(data)
           dispatch(getAllChats())
           dispatch(getAllNotifications())
@@ -80,17 +80,17 @@ function App() {
     <div className='flex'>
       <Toaster position="top-right" reverseOrder={false} />
       <Routes>
-      
+
         <Route path='/' element={<PublicRoute><Authentication /></PublicRoute>} />
 
         {/* Left side - ChatsContainer */}
-        <Route path='chat' element={<ProtectedRoute><ChatsContainer/></ProtectedRoute>}>
-          <Route index element={<FriendsChats/>} />
-          <Route path='status' element={<Status/>} />
-          <Route path='groups' element={<GroupChats/>} />
-          <Route path='friend-requests' element={<FriendRequests/>} />
-          <Route path='search-users' element={<SearchUsers/>} />
-          <Route path='profile' element={<Profile/>} />
+        <Route path='chat' element={<ProtectedRoute><ChatsContainer /></ProtectedRoute>}>
+          <Route index element={<FriendsChats />} />
+          <Route path='status' element={<Status />} />
+          <Route path='groups' element={<GroupChats />} />
+          <Route path='friend-requests' element={<FriendRequests />} />
+          <Route path='search-users' element={<SearchUsers />} />
+          <Route path='profile' element={<Profile />} />
         </Route>
 
 
