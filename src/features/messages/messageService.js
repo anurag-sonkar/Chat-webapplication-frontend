@@ -4,20 +4,25 @@ import { getConfig } from "../../utils/config";
 
 
 const getAllMessages = async (id) => {
-  console.log(id)
-
   const response = await axios.get(`${message_base_url}/message/${id}` , getConfig());
 
-  console.log(response)
+  // console.log(response)
   return response.data
 
 
 }
 
+const sendMessage = async(data)=>{
+  console.log(data)
+  const response = await axios.post(`${message_base_url}/message` , data , getConfig())
+  console.log(response)
+  return response.data
+}
+
 
 const messageService = {
 
-  getAllMessages
+  getAllMessages, sendMessage
 }
 
 export default messageService;

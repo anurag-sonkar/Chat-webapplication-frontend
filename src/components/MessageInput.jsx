@@ -4,6 +4,7 @@ import { FaFaceSmile } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 
 import { useDispatch, useSelector } from 'react-redux'
+import { sendMessage } from '../features/messages/messageSlice';
 // import { sendMessage } from '../features/messages/messageSlice'
 
 function MessageInput() {
@@ -17,7 +18,7 @@ function MessageInput() {
     const handleSendMessage = (e)=>{
         e.preventDefault()
         if (message.trim() === '') return // Prevent sending empty messages
-        // const messagePromise = dispatch(sendMessage({id : selectedUser?._id , message})).unwrap()
+        const messagePromise = dispatch(sendMessage({ chatId: selectedChat?._id , content : message})).unwrap()
         messagePromise.then(() => setMessage(""))
 
     }

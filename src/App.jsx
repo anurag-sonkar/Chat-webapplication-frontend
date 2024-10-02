@@ -30,6 +30,7 @@ import { io } from 'socket.io-client'
 import { setOnlineUsers } from './features/users/userSlice';
 import { getAllNotifications, setNotification } from './features/notifications/notificationSlice';
 import { getAllChats } from './features/chats/chatSlice';
+import { setNewMessage } from './features/messages/messageSlice';
 
 
 
@@ -67,9 +68,11 @@ function App() {
           dispatch(getAllChats())
           dispatch(getAllNotifications())
         })
-        // socket.on('new-message', (newMessage) => {
-        //   dispatch(setNewMessage(newMessage))
-        // })
+
+        // new- message
+        socket.on('new-message', (newMessage) => {
+          dispatch(setNewMessage(newMessage))
+        })
         return () => socket.close()
       }
 
