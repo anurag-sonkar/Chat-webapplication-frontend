@@ -43,7 +43,7 @@ function App() {
   useEffect(
     () => {
       if (user) {
-        const socket = io('http://localhost:8000', {
+        const socket = io('http://192.168.43.195:8000', {
           query: {
             userId: user?._id
           }
@@ -62,7 +62,7 @@ function App() {
         })
 
 
-        // accept request - chat refetch
+        // accept request - chat refetch  
         socket.on('refetch-chat', (data) => {
           console.log(data)
           dispatch(getAllChats())
