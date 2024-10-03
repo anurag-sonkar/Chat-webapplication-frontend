@@ -1,25 +1,51 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { IoVideocam } from "react-icons/io5";
 import { IoSearch } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Message from './Message';
 import MessageInput from './MessageInput';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { io } from 'socket.io-client';
+import { setTypingUser } from '../features/messages/messageSlice';
+import Loading from './Loading';
+const socket = io('http://192.168.43.195:8000')
 
 function Chat() {
   const messageEndRef = useRef(null)
   const { selectedChat } = useSelector(state => state.chat)
+  const { messages, typingUser } = useSelector(state => state.message)
+  const { user } = useSelector(state => state.auth)
+  const dispatch = useDispatch()
   // console.log(selectedChat?.members?.[0])
-  const { messages } = useSelector(state => state.message)
-  console.log(messages)
+  console.log(typingUser)
 
   // Scroll to the bottom when new messages arrive
   useEffect(() => {
     if (messageEndRef.current) {
       messageEndRef.current.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [messages]) // This will trigger when messages change
+  }, [messages, typingUser]) // This will trigger when messages change
+
+  // typing
+  useEffect(() => {
+    // Listen for typing event
+    socket.on("displayTyping", (data) => {
+      // console.log(data)
+      dispatch(setTypingUser(data))
+
+    });
+
+    // Listen for stop typing event
+    socket.on("removeTyping", (data) => {
+      dispatch(setTypingUser(null))
+    });
+
+    // Cleanup on component unmount
+    return () => {
+      socket.off("displayTyping");
+      socket.off("removeTyping");
+    };
+  }, []);
 
 
   return (
@@ -34,8 +60,13 @@ function Chat() {
             </div>
           </div>
           {/*name */}
-          <div className='text-lg font-semibold'>
-            {selectedChat?.members?.[0]?.name}
+          <div className=''>
+            <div className='text-lg font-semibold'>
+              {selectedChat?.members?.[0]?.name}
+            </div>
+            <div className='text-xs'>
+              {typingUser === user?._id && "typing..."}
+            </div>
           </div>
         </div>
         <div className='flex items-center gap-5'> {/* right div */}
@@ -51,7 +82,7 @@ function Chat() {
         {
           messages?.length > 0 && messages?.map((message, index) => <Message key={message?._id} chat={message} />)
         }
-        <div ref={messageEndRef}></div> {/* scroll till bottom message */}
+        <div ref={messageEndRef} className='relative'>{typingUser === user?._id && <Loading />}</div> {/* scroll till bottom message */}
 
       </div>
 

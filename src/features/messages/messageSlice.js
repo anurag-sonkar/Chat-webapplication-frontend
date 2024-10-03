@@ -3,7 +3,8 @@ import toast from 'react-hot-toast';  // Import toast here
 import messageService from "./messageService";
 
 const initialState = {
-  messages : [],
+  messages: [],
+  typingUser : null,
   isLoading: false,
   successMessage: "",
   errorMessage: ""
@@ -17,7 +18,7 @@ export const getAllMessages = createAsyncThunk(
       const response = await messageService.getAllMessages(data);
       return response;
     } catch (error) {
-      // Use `rejectWithValue` to return error message to reducer
+      // Use rejectWithValue to return error message to reducer
       return thunkAPI.rejectWithValue(
         error?.response?.data?.message || "Something went wrong"
       );
@@ -34,7 +35,7 @@ export const sendMessage = createAsyncThunk(
       const response = await messageService.sendMessage(data);
       return response;
     } catch (error) {
-      // Use `rejectWithValue` to return error message to reducer
+      // Use rejectWithValue to return error message to reducer
       return thunkAPI.rejectWithValue(
         error?.response?.data?.message || "Something went wrong"
       );
@@ -48,7 +49,11 @@ const messageSlice = createSlice({
   reducers: {
     setNewMessage: (state, action) => {
       state.messages.push(action.payload)
-    }
+    },
+    setTypingUser : (state , action)=>{
+      state.typingUser = action.payload
+
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -133,5 +138,5 @@ const messageSlice = createSlice({
   },
 });
 
-export const { setNewMessage } = messageSlice.actions;
+export const { setNewMessage, setTypingUser } = messageSlice.actions;
 export default messageSlice.reducer;
