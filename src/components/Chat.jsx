@@ -13,6 +13,7 @@ import { format, isToday, isYesterday } from 'date-fns'; // For date formatting
 
 function Chat() {
   const messageEndRef = useRef(null)
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false) // used in message input
   const { selectedChat } = useSelector(state => state.chat)
   const { messages, typingUser } = useSelector(state => state.message)
   const { user } = useSelector(state => state.auth)
@@ -63,7 +64,7 @@ function Chat() {
   return (
     <div className='h-full w-full  border-l'>
       {/* chat - header */}
-      <div className='flex justify-between bg-[#F0F2F5] px-4 py-2 items-center'>
+      <div className='flex justify-between bg-[#F0F2F5] px-4 py-2 items-center' onClick={() => setShowEmojiPicker(false)}>
         <div className='flex items-center gap-4'> {/* left div */}
           {/* avatar */}
           <div className="avatar">
@@ -98,7 +99,7 @@ function Chat() {
 
       </div> */}
 
-      <div className='h-[80vh] w-full bg-white overflow-y-scroll px-4 py-2'>
+      <div className='h-[80vh] w-full bg-white overflow-y-scroll px-4 py-2' onClick={() => setShowEmojiPicker(false)}>
         {
           messages?.length > 0 && messages.map((message, index) => {
             const showDateHeader = index === 0 || formatDate(messages[index - 1]?.createdAt) !== formatDate(message?.createdAt);
@@ -121,7 +122,7 @@ function Chat() {
 
       {/* chat - input */}
       <div>
-        <MessageInput />
+        <MessageInput showEmojiPicker={showEmojiPicker} setShowEmojiPicker={setShowEmojiPicker}/>
       </div>
     </div>
   )

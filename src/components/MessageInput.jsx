@@ -7,9 +7,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { sendMessage } from '../features/messages/messageSlice';
 import { io } from 'socket.io-client';
 const socket = io('http://192.168.43.195:8000')
+import EmojiPicker from 'emoji-picker-react';
 
-function MessageInput() {
+function MessageInput({ showEmojiPicker, setShowEmojiPicker }) {
+
     const [message, setMessage] = useState('')
+    // const [showEmojiPicker, setShowEmojiPicker] = useState(false) -- moving to parent component inorder to close emoji when click on body
     const { selectedChat } = useSelector(state => state.chat)
     const dispatch = useDispatch()
 
@@ -49,6 +52,10 @@ function MessageInput() {
         socket.emit("stopTyping", { userId: selectedChat?.members?.[0]?._id })
     }
 
+    const handleEmojiClick = (emojiObject) => {
+        setMessage(prevMessage => prevMessage + emojiObject.emoji); // Add emoji to message
+    };
+
     useEffect(() => {
         // Cleanup on component unmount
         return () => {
@@ -63,7 +70,14 @@ function MessageInput() {
     return (
         <form className='bg-[#F0F2F5] flex items-center px-4 py-2' onSubmit={handleSendMessage} >
             <div className='flex gap-3 pr-2'>
-                <div className='cursor-pointer'><FaFaceSmile size={25} /></div>
+                <div className='relative cursor-pointer' onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+                    <FaFaceSmile size={25} />
+                    {showEmojiPicker && (
+                        <div className="absolute bottom-10">
+                            <EmojiPicker onEmojiClick={handleEmojiClick} /> {/* Emoji Picker Component */}
+                        </div>
+                    )}
+                </div>
                 <div className='cursor-pointer'><FaPlus size={25} /></div>
             </div>
 
