@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Notification from '../components/Notifications';
 import Card from '../components/Card';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllChats } from '../features/chats/chatSlice';
+import { filterChats, getAllChats } from '../features/chats/chatSlice';
 import { getAllMessages } from '../features/messages/messageSlice';
 
 const dummyCardData = [
@@ -19,7 +19,8 @@ const dummyCardData = [
 ]
 
 function FriendsChats() {
-    const { chats } = useSelector(state => state.chat)
+    const [search , setSearch] = useState("")
+    const { chats , isLoading } = useSelector(state => state.chat)
     const dispatch = useDispatch()
 
     console.log(chats)
@@ -36,11 +37,25 @@ function FriendsChats() {
 
     }
 
+    const handleSearchFriend = (e) => {
+        const searchValue = e.target.value;
+        setSearch(searchValue);
+
+        if (searchValue.trim() === "") {
+            // If search input is empty, fetch all chats again
+            dispatch(getAllChats());
+        } else {
+            // Otherwise, filter chats based on the search value
+            dispatch(filterChats(searchValue));
+        }
+    }
+
+
     return (
         <div>
             {/* Search input box -1 for friends only */}
             <label className="input input-bordered flex items-center gap-2">
-                <input type="text" className="grow" placeholder="Search" />
+                <input type="text" className="grow" placeholder="Search" value={search} onChange={handleSearchFriend}/>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
@@ -56,11 +71,30 @@ function FriendsChats() {
             {/* Chat card */}
             <div className='custom-scrollbar'>
                 {
-                    chats?.length > 0 && chats.map((chat, index) => {
+                    !isLoading ? chats?.length > 0 && chats.map((chat, index) => {
                         if (chat?.isGroupChat === false) {
-                            return <div key={chat?._id} onClick={()=>handleGetAllMessages(chat?._id)}><Card  {...chat?.members?.[0]} /></div>
+                            return <div key={chat?._id} onClick={() => handleGetAllMessages(chat?._id)}><Card  {...chat?.members?.[0]} /></div>
                         }
-                    })
+                    }) : <div className='py-4 mr-2'>
+                            <div className="flex w-full p-4 rounded-md flex-col gap-4 drop-shadow-xl">
+                                <div className="flex items-center gap-4">
+                                    <div className="skeleton h-16 w-16 shrink-0 rounded-full"></div>
+                                    <div className="flex flex-col gap-4">
+                                        <div className="skeleton h-2 w-48"></div>
+                                        <div className="skeleton h-2 w-60"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex w-full p-4 rounded-md flex-col gap-4 drop-shadow-xl">
+                                <div className="flex items-center gap-4">
+                                    <div className="skeleton h-16 w-16 shrink-0 rounded-full"></div>
+                                    <div className="flex flex-col gap-4">
+                                        <div className="skeleton h-2 w-48"></div>
+                                        <div className="skeleton h-2 w-60"></div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
                 }
             </div>
 

@@ -39,6 +39,16 @@ const chatSlice = createSlice({
     },
     resetSelectedChat : (state,action)=>{
       state.selectedChat = null
+    },
+    filterChats : (state , action)=>{
+      console.log(action.payload)
+      const filteredChats = state.chats.filter(chat => {
+        return chat.members.some(member =>
+          member.name.toLowerCase().includes(action.payload.toLowerCase()) ||
+          member.email.toLowerCase().includes(action.payload.toLowerCase())
+        );
+      });
+      state.chats = filteredChats
     }
   },
   extraReducers: (builder) => {
@@ -85,5 +95,5 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setFriendChat, resetSelectedChat } = chatSlice.actions;
+export const { setFriendChat, resetSelectedChat, filterChats } = chatSlice.actions;
 export default chatSlice.reducer;

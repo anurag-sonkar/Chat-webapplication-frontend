@@ -9,6 +9,7 @@ import { io } from 'socket.io-client';
 import { setTypingUser } from '../features/messages/messageSlice';
 import Loading from './Loading';
 const socket = io('http://192.168.43.195:8000')
+import { format, isToday, isYesterday } from 'date-fns'; // For date formatting
 
 function Chat() {
   const messageEndRef = useRef(null)
@@ -17,7 +18,7 @@ function Chat() {
   const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   // console.log(selectedChat?.members?.[0])
-  console.log(typingUser)
+  console.log(messages)
 
   // Scroll to the bottom when new messages arrive
   useEffect(() => {
@@ -46,6 +47,17 @@ function Chat() {
       socket.off("removeTyping");
     };
   }, []);
+
+  // Helper function to format message dates
+  const formatDate = (date) => {
+    if (isToday(new Date(date))) {
+      return 'Today';
+    } else if (isYesterday(new Date(date))) {
+      return 'Yesterday';
+    } else {
+      return format(new Date(date), 'dd/MM/yyyy');
+    }
+  };
 
 
   return (
@@ -78,12 +90,33 @@ function Chat() {
 
       {/* --------------------------------------------------------------- */}
       {/* chat messages */}
-      <div className='h-[80vh] w-full bg-white overflow-y-scroll px-4 py-2'>
+      {/* <div className='h-[80vh] w-full bg-white overflow-y-scroll px-4 py-2'>
         {
           messages?.length > 0 && messages?.map((message, index) => <Message key={message?._id} chat={message} />)
         }
-        <div ref={messageEndRef} className='relative'>{typingUser === user?._id && <Loading />}</div> {/* scroll till bottom message */}
+        <div ref={messageEndRef} className='relative h-6'>{typingUser === user?._id && <Loading />}</div>
 
+      </div> */}
+
+      <div className='h-[80vh] w-full bg-white overflow-y-scroll px-4 py-2'>
+        {
+          messages?.length > 0 && messages.map((message, index) => {
+            const showDateHeader = index === 0 || formatDate(messages[index - 1]?.createdAt) !== formatDate(message?.createdAt);
+            return (
+              <div key={message?._id}>
+                {showDateHeader && (
+                  <div className="text-center my-2 text-gray-500">
+                    {formatDate(message?.createdAt)}
+                  </div>
+                )}
+                <Message chat={message} />
+              </div>
+            )
+          })
+        }
+        <div ref={messageEndRef} className='relative h-6'>
+          {typingUser === user?._id && <Loading />}
+        </div> {/* scroll till bottom message */}
       </div>
 
       {/* chat - input */}
