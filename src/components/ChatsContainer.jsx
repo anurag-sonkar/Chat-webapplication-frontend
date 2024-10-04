@@ -10,6 +10,7 @@ import ChatMenu from './ChatMenu';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaUserFriends } from "react-icons/fa";
 import { MdPersonSearch } from "react-icons/md";
+import { MdGroupAdd } from "react-icons/md";
 import { Avatar, Space } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
 import Loader from './Loader';
@@ -72,6 +73,11 @@ const ChatsContainer = () => {
                   key: 'status',
                   icon: <FaCircleNotch style={{ fontSize: '22px' }} />,
                   label: <Link to='/chat/status'>Status</Link>,
+                },
+                {
+                  key: 'New Group',
+                  icon: <MdGroupAdd style={{ fontSize: '22px' }} />,
+                  label: <Link to='/chat/create-new-group'>Create New Group</Link>,
                 },
                 {
                   key: 'groups',

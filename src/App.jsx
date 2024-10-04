@@ -31,6 +31,7 @@ import { setOnlineUsers } from './features/users/userSlice';
 import { getAllNotifications, setNotification } from './features/notifications/notificationSlice';
 import { getAllChats } from './features/chats/chatSlice';
 import { setNewMessage } from './features/messages/messageSlice';
+import CreateNewGroup from './pages/CreateNewGroup';
 
 
 
@@ -90,6 +91,7 @@ function App() {
         <Route path='chat' element={<ProtectedRoute><ChatsContainer /></ProtectedRoute>}>
           <Route index element={<FriendsChats />} />
           <Route path='status' element={<Status />} />
+          <Route path='create-new-group' element={<CreateNewGroup />} />
           <Route path='groups' element={<GroupChats />} />
           <Route path='friend-requests' element={<FriendRequests />} />
           <Route path='search-users' element={<SearchUsers />} />
