@@ -25,6 +25,21 @@ export const getAllChats = createAsyncThunk(
   }
 );
 
+export const createNewGroup = createAsyncThunk(
+  "chat/createNewGroup",
+  async (data, thunkAPI) => {
+    // console.log(...data)
+    try {
+      const response = await chatService.createNewGroup(data);
+      return response;
+    } catch (error) {
+      // Use `rejectWithValue` to return error message to reducer
+      return thunkAPI.rejectWithValue(
+        error?.response?.data?.message || "Something went wrong"
+      );
+    }
+  }
+);
 
 const chatSlice = createSlice({
   name: "chat",
@@ -91,6 +106,45 @@ const chatSlice = createSlice({
         //   autoClose: 4000,
         //   theme: "dark"
         // });
+      })
+      .addCase(createNewGroup.pending, (state) => {
+        state.isLoading = true;
+        state.successMessage = "";
+        state.errorMessage = "";
+        toast.loading("Creating Group...", {
+          id: "loading-toast",  // Set a specific ID to control this toast
+          position: "top-right",
+          autoClose: false,
+          theme: "dark"
+        });
+      })
+      .addCase(createNewGroup.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.chats.push(action.payload) || null;
+        state.successMessage = action.payload?.message || "group created";
+        state.errorMessage = "";
+
+        // Dismiss the loading toast and show success message
+        toast.dismiss("loading-toast");
+        toast.success(state.successMessage, {
+          position: "top-right",
+          autoClose: 4000,
+          theme: "dark"
+        });
+      })
+      .addCase(createNewGroup.rejected, (state, action) => {
+        state.isLoading = false;
+        // state.user = null;
+        state.successMessage = "";
+        state.errorMessage = action.payload || "failed";
+
+        // Dismiss the loading toast and show error message
+        toast.dismiss("loading-toast");
+        toast.error(state.errorMessage, {
+          position: "top-right",
+          autoClose: 4000,
+          theme: "dark"
+        });
       })
   },
 });

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone'
 import { FaCamera } from 'react-icons/fa';
 import { MdGroups } from "react-icons/md";
+import { createNewGroup } from '../features/chats/chatSlice';
 
 function CreateNewGroup() {
     const { chats } = useSelector(state => state.chat)
@@ -11,6 +12,7 @@ function CreateNewGroup() {
     const maxMembersAllowed = 50
     const [imagePreview, setImagePreview] = useState(null);  // For preview
     const [groupName , setGroupName] = useState("") // gp name
+    const [groupImage , setGroupImage] = useState("") // gp image
     const dispatch = useDispatch()
     let formData = new FormData();
 
@@ -18,18 +20,33 @@ function CreateNewGroup() {
         setMembers(value)
     };
 
-    const options = chats?.length > 0 && chats.map((chat, index) => {
-        if (chat?.isGroupChat === false) {
-            return {
-                label: chat?.members?.[0]?.name,
-                desc: <div>{chat?.members?.[0]?.name}</div>,
-                value: chat?.members?.[0]._id,
-                emoji: <img src={chat?.members?.[0]?.avatar?.url} className='w-8 h-8 rounded-full' />
+    // const options = chats?.length > 0 && chats.map((chat, index) => {
+    //     if (chat?.isGroupChat === false) {
+    //         return {
+    //             label: chat?.members?.[0]?.name,
+    //             desc: <div>{chat?.members?.[0]?.name}</div>,
+    //             value: chat?.members?.[0]._id,
+    //             emoji: <img src={chat?.members?.[0]?.avatar?.url} className='w-8 h-8 rounded-full' />
+    //         }
+    //     }
+    // })
+
+    const options = chats?.length > 0
+        ? chats.map((chat) => {
+            if (chat?.isGroupChat === false) {
+                return {
+                    label: chat?.members?.[0]?.name,
+                    desc: <div>{chat?.members?.[0]?.name}</div>,
+                    value: chat?.members?.[0]?._id,
+                    emoji: <img src={chat?.members?.[0]?.avatar?.url} className='w-8 h-8 rounded-full' alt="avatar" />
+                };
             }
-        }
-    })
+            return null;  // Ensure non-matching chats return null instead of undefined
+        }).filter(option => option !== null)  // Remove any null values from the array
+        : [];
 
 
+    console.log(options)
     // group profile upoad
     const onDrop = useCallback(acceptedFiles => {
         // Do something with the files
@@ -39,8 +56,7 @@ function CreateNewGroup() {
             reader.onload = () => {
                 // Display the image preview
                 setImagePreview(reader.result);
-                formData.append("avatar", file); // Append the selected file
-
+                setGroupImage(file)
             };
             reader.readAsDataURL(file); // Read file as a data URL for image preview
         }
@@ -49,11 +65,17 @@ function CreateNewGroup() {
 
     const handleCreateNewGroup = ()=>{
         formData.append("name" , groupName)
-        formData.append('members' , members)
+        // Appending each member individually
+        members.forEach(member => {
+            formData.append("members", member);
+        });
 
+        if(groupImage){
+            formData.append("avatar", groupImage); 
+        }
+        dispatch(createNewGroup(formData))
         // formData.forEach((ele)=>console.log(ele))
         // console.log(formData.getAll('avatar'))
-        return
     }
 
 
@@ -76,10 +98,10 @@ function CreateNewGroup() {
                     options={options}
                     optionRender={(option) => (
                         <Space>
-                            <span role="img" aria-label={option.data.label}>
-                                {option.data.emoji}
+                            <span role="img" aria-label={option?.data?.label}>
+                                {option?.data?.emoji}
                             </span>
-                            {option.data.desc}
+                            {option?.data?.desc}
                         </Space>
                     )}
                 />

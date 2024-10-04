@@ -12,8 +12,22 @@ const getAllChats = async () => {
   
 }
 
+const createNewGroup = async (data) => {
+  // console.log(data)
+  const config = getConfig()
+  console.log(config.headers.Authorization)
+  const response = await axios.post(`${chat_base_url}/group`, data, {
+    headers: {
+      Authorization: `${config?.headers?.Authorization}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  console.log(response)
+  return response.data
+}
+
 const chatService = {
-  getAllChats
+  getAllChats, createNewGroup
 }
 
 export default chatService;

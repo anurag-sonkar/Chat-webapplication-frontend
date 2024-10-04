@@ -7,9 +7,12 @@ import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './routing/ProtectedRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import PublicRoute from './routing/PublicRoute';
-const FriendsChats = lazy(
-  () => import('./pages/FriendsChats')
-)
+// const FriendsChats = lazy(
+//   () => import('./pages/FriendsChats')
+// )
+
+import FriendsChats from "./pages/FriendsChats"
+
 const Status = lazy(
   () => import('./pages/Status')
 )
