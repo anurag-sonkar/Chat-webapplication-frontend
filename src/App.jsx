@@ -12,7 +12,7 @@ import PublicRoute from './routing/PublicRoute';
 // )
 
 import FriendsChats from "./pages/FriendsChats"
-
+ 
 const Status = lazy(
   () => import('./pages/Status')
 )

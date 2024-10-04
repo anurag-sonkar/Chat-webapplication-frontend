@@ -47,7 +47,12 @@ const chatSlice = createSlice({
   reducers: {
     setFriendChat: (state, action) => {
       console.log(action.payload)
-      const selectedUser = state.chats.find((chat) => chat.members?.[0]?._id === action.payload);
+      let selectedUser = state.chats.find((chat) => chat.members?.[0]?._id === action.payload);
+
+      if(selectedUser === undefined){
+        selectedUser = state.chats.find((chat)=>chat._id === action.payload)
+      }
+      console.log(selectedUser ,"check")
       state.selectedChat = selectedUser;
 
       

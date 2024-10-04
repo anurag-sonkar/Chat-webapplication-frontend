@@ -18,7 +18,7 @@ function Message({ chat }) {
           </div>
           <div className="chat-footer">
               {/* Obi-Wan Kenobi */}
-              <time className="text-xs opacity-50 flex items-center gap-1">{new Date(chat?.createdAt).toLocaleTimeString()} {chat?.sender?._id === user?._id && <span>{isLoading ? <CiClock2 /> : <IoCheckmarkOutline />}</span>
+              <time className="text-[10px] font-bold opacity-50 flex items-center gap-1">{new Date(chat?.createdAt).toLocaleTimeString()} {chat?.sender?._id === user?._id && <span>{isLoading ? <CiClock2 /> : <IoCheckmarkOutline />}</span>
               }</time>
           </div>
           <div className="chat-bubble">{chat?.content}</div>

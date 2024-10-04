@@ -12,6 +12,12 @@ const socket = io('http://192.168.43.195:8000')
 import { format, isToday, isYesterday } from 'date-fns'; // For date formatting
 
 function Chat() {
+  const [id , setId] = useState('') // selected user / group
+  const [name , setName] = useState('')
+  const [avatar , setAvatar] = useState('')
+  const [email , setEmail] = useState('')
+  const [admin , setAdmin] = useState({}) // in case of group , store full obj admin details
+
   const messageEndRef = useRef(null)
   const [showEmojiPicker, setShowEmojiPicker] = useState(false) // used in message input
   const { selectedChat } = useSelector(state => state.chat)
@@ -19,7 +25,7 @@ function Chat() {
   const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   // console.log(selectedChat?.members?.[0])
-  console.log(messages)
+  // console.log(messages)
 
   // Scroll to the bottom when new messages arrive
   useEffect(() => {
@@ -61,6 +67,29 @@ function Chat() {
   };
 
 
+  // id , name  , avatar - based on selected chat is group / single user
+  useEffect(
+    () => {
+      const isGroupChat = selectedChat?.isGroupChat
+
+      // user chat
+      if (!isGroupChat) {
+        setName(selectedChat?.members?.[0]?.name || '')
+        setId(selectedChat?.members?.[0]?._id || '')
+        setEmail(selectedChat?.members?.[0]?.email || '')
+        setAvatar(selectedChat?.members?.[0]?.avatar?.url || '')
+        setAdmin({})
+
+      } else {
+        setName(selectedChat?.name || '')
+        setEmail('')
+        setId(selectedChat?._id)
+        setAvatar(selectedChat?.avatar?.url)
+        setAdmin(selectedChat?.groupAdmin)
+      }
+    }, [selectedChat] // as props
+  )
+
   return (
     <div className='h-full w-full  border-l'>
       {/* chat - header */}
@@ -69,13 +98,18 @@ function Chat() {
           {/* avatar */}
           <div className="avatar">
             <div className="w-12 rounded-full">
-              <img src={selectedChat?.members?.[0]?.avatar?.url} />
+              <img src={avatar} />
             </div>
           </div>
           {/*name */}
           <div className=''>
-            <div className='text-lg font-semibold'>
-              {selectedChat?.members?.[0]?.name}
+            <div className='flex items-end gap-2'>
+              <div className='text-2xl font-semibold'>
+                {name}
+              </div>
+              {/* {
+                admin && <div className='text-[10px]'>{admin?.name + ''}</div>
+              } */}
             </div>
             <div className='text-xs'>
               {typingUser === user?._id && "typing..."}
