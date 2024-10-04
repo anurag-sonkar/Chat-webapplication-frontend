@@ -7,12 +7,10 @@ import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './routing/ProtectedRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import PublicRoute from './routing/PublicRoute';
-// const FriendsChats = lazy(
-//   () => import('./pages/FriendsChats')
-// )
 
-import FriendsChats from "./pages/FriendsChats"
- 
+const FriendsChats = lazy(
+  () => import('./pages/FriendsChats')
+)
 const Status = lazy(
   () => import('./pages/Status')
 )
@@ -28,13 +26,15 @@ const SearchUsers = lazy(
 const Profile = lazy(
   () => import('./pages/Profile')
 )
+const CreateNewGroup = lazy(
+  () => import("./pages/CreateNewGroup")
+)
 
 import { io } from 'socket.io-client'
 import { setOnlineUsers } from './features/users/userSlice';
 import { getAllNotifications, setNotification } from './features/notifications/notificationSlice';
 import { getAllChats } from './features/chats/chatSlice';
 import { setNewMessage } from './features/messages/messageSlice';
-import CreateNewGroup from './pages/CreateNewGroup';
 
 
 
@@ -71,6 +71,13 @@ function App() {
           console.log(data)
           dispatch(getAllChats())
           dispatch(getAllNotifications())
+        })
+        
+        // on new group added
+        socket.on('group-chat', (data) => {
+          console.log(data)
+          dispatch(getAllChats())
+          // dispatch(getAllNotifications())
         })
 
         // new- message

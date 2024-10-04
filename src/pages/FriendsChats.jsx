@@ -72,9 +72,9 @@ function FriendsChats() {
             <div className='custom-scrollbar'>
                 {
                     !isLoading ? chats?.length > 0 && chats.map((chat, index) => {
-                        {/* if (chat?.isGroupChat === false) { */}
-                            return <div key={chat?._id} onClick={() => handleGetAllMessages(chat?._id)}><Card  chat={chat} /></div>
-                        {/* } */}
+                        if (chat?.isGroupChat === false) {
+                            return <div key={chat?._id} onClick={() => handleGetAllMessages(chat?._id)}><Card  {...chat?.members?.[0]} /></div>
+                        }
                     }) : <div className='py-4 mr-2'>
                             <div className="flex w-full p-4 rounded-md flex-col gap-4 drop-shadow-xl">
                                 <div className="flex items-center gap-4">

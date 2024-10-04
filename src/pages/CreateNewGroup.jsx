@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Select, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone'
 import { FaCamera } from 'react-icons/fa';
 import { MdGroups } from "react-icons/md";
-import { createNewGroup } from '../features/chats/chatSlice';
+import { createNewGroup, getAllChats } from '../features/chats/chatSlice';
 
 function CreateNewGroup() {
     const { chats } = useSelector(state => state.chat)
@@ -77,6 +77,13 @@ function CreateNewGroup() {
         // formData.forEach((ele)=>console.log(ele))
         // console.log(formData.getAll('avatar'))
     }
+
+
+    useEffect(
+        () => {
+            dispatch(getAllChats())
+        }, []
+    )
 
 
     return (

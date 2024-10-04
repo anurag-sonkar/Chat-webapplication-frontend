@@ -12,7 +12,7 @@ function Message({ chat }) {
           <div className="chat-image avatar">
               <div className="w-10 rounded-full">
                   <img
-                      alt="Tailwind CSS chat bubble component"
+                      alt="bubble "
                       src={`${chat?.sender?._id === user?._id ? user.avatar.url : chat.sender.avatar.url}`} />
               </div>
           </div>
