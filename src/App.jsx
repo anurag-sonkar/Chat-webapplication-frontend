@@ -14,8 +14,8 @@ const FriendsChats = lazy(
 const Status = lazy(
   () => import('./pages/Status')
 )
-const GroupChats = lazy(
-  () => import('./pages/GroupChats')
+const GroupsChats = lazy(
+  () => import('./pages/GroupsChats')
 )
 const FriendRequests = lazy(
   () => import('./pages/FriendRequests')
@@ -102,7 +102,7 @@ function App() {
           <Route index element={<FriendsChats />} />
           <Route path='status' element={<Status />} />
           <Route path='create-new-group' element={<CreateNewGroup />} />
-          <Route path='groups' element={<GroupChats />} />
+          <Route path='groups' element={<GroupsChats />} />
           <Route path='friend-requests' element={<FriendRequests />} />
           <Route path='search-users' element={<SearchUsers />} />
           <Route path='profile' element={<Profile />} />

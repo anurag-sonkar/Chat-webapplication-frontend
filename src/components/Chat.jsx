@@ -80,7 +80,7 @@ function Chat() {
         setAvatar(selectedChat?.members?.[0]?.avatar?.url || '')
         setAdmin({})
 
-      } else {
+      } else { // group chat
         setName(selectedChat?.name || '')
         setEmail('')
         setId(selectedChat?._id)

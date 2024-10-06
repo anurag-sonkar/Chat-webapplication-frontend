@@ -57,7 +57,7 @@ console.log(users)
             </div>
 
             {/* serach reposne */}
-            <div>
+            <div className='custom-scrollbar'>
             {
                     users?.length > 0 && users.map((user) => <Card key={user._id} {...user} />) 
             }
