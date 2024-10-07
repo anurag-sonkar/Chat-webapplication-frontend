@@ -4,7 +4,7 @@ import userReducer from "../features/users/userSlice"
 import notificationReducer from "../features/notifications/notificationSlice";
 import chatReducer from "../features/chats/chatSlice"
 import messageReducer from "../features/messages/messageSlice"
-// import groupReducer from "../features/groups/groupSlice"
+import groupReducer from "../features/groups/groupSlice"
 
 
 export const store = configureStore({
@@ -14,7 +14,7 @@ export const store = configureStore({
         notification : notificationReducer,
         chat: chatReducer,
         message : messageReducer,
-        // group : groupReducer
+        group : groupReducer
 
     }
 

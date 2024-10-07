@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { resetSelectedUser, setSelectedUser } from '../features/users/userSlice';
 import { useLocation } from 'react-router-dom';
 import { resetSelectedChat, setFriendChat } from '../features/chats/chatSlice';
+import { resetSelectedGroup } from '../features/groups/groupSlice';
 
 function Card({ _id, name, avatar, email }) {
     const dispatch = useDispatch()
@@ -14,10 +15,12 @@ function Card({ _id, name, avatar, email }) {
         if (pathname === '/chat/search-users') {
             dispatch(setSelectedUser(id))
             dispatch(resetSelectedChat())
-
+            dispatch(resetSelectedGroup())
+            
         } else if (pathname === '/chat') {
             dispatch(setFriendChat(id))
             dispatch(resetSelectedUser())
+            dispatch(resetSelectedGroup())
 
         }
     }

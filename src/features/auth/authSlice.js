@@ -29,7 +29,6 @@ export const register = createAsyncThunk(
 );
 
 export const updateAvatar = createAsyncThunk("auth/avatar" , async(data , thunkAPI)=>{
-  console.log(data)
   try {
     const response = await authService.updateAvatar(data);
     return response;

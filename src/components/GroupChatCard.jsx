@@ -3,6 +3,7 @@ import { Avatar, Tooltip, Popover } from 'antd';
 import { resetSelectedUser, setSelectedUser } from '../features/users/userSlice';
 import { resetSelectedChat, setFriendChat } from '../features/chats/chatSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { resetSelectedGroup } from '../features/groups/groupSlice';
 
 function GroupChatCard({ groupChat }) {
     const [avatar, setAvatar] = useState([]);
@@ -41,6 +42,7 @@ function GroupChatCard({ groupChat }) {
     const setUser = (id) => {
         dispatch(setFriendChat(id))
         dispatch(resetSelectedUser())
+        dispatch(resetSelectedGroup())
     }
 
     // calcuating total active in real time

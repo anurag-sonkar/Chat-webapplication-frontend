@@ -35,6 +35,7 @@ import { setOnlineUsers } from './features/users/userSlice';
 import { getAllNotifications, setNotification } from './features/notifications/notificationSlice';
 import { getAllChats } from './features/chats/chatSlice';
 import { setNewMessage } from './features/messages/messageSlice';
+import ManageGroups from './pages/ManageGroups';
 
 
 
@@ -104,6 +105,7 @@ function App() {
           <Route path='create-new-group' element={<CreateNewGroup />} />
           <Route path='groups' element={<GroupsChats />} />
           <Route path='friend-requests' element={<FriendRequests />} />
+          <Route path='manage-groups' element={<ManageGroups />} />
           <Route path='search-users' element={<SearchUsers />} />
           <Route path='profile' element={<Profile />} />
         </Route>

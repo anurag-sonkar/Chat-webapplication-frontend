@@ -11,6 +11,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaUserFriends } from "react-icons/fa";
 import { MdPersonSearch } from "react-icons/md";
 import { MdGroupAdd } from "react-icons/md";
+import { HiViewGridAdd } from "react-icons/hi";
 import { Avatar, Space } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
 import Loader from './Loader';
@@ -88,6 +89,11 @@ const ChatsContainer = () => {
                   key: 'requests',
                   icon: <FaUserFriends style={{ fontSize: '22px' }} />,
                   label: <Link to='/chat/friend-requests'>Friend Requests</Link>,
+                },
+                {
+                  key: 'manage-groups',
+                  icon: <HiViewGridAdd style={{ fontSize: '22px' }} />,
+                  label: <Link to='/chat/manage-groups'>Manage Gropus</Link>,
                 },
                 {
                   key: 'search', 
