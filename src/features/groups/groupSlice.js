@@ -41,6 +41,22 @@ export const updateGroupName = createAsyncThunk(
   }
 );
 
+export const removeGroupMember = createAsyncThunk(
+  "group/removeGroupMember",
+  async (data, thunkAPI) => {
+    console.log(data)
+    try {
+      const response = await groupService.removeGroupMember(data);
+      return response;
+    } catch (error) {
+      // Use `rejectWithValue` to return error message to reducer
+      return thunkAPI.rejectWithValue(
+        error?.response?.data?.message || "Something went wrong"
+      );
+    }
+  }
+);
+
 // export const updateAvatar = createAsyncThunk("auth/avatar", async (data, thunkAPI) => {
 //   console.log(data)
 //   try {
@@ -147,6 +163,46 @@ const groupSlice = createSlice({
         // state.user = null;
         state.successMessage = "";
         state.errorMessage = action.payload || "Updation failed";
+
+        // Dismiss the loading toast and show error message
+        toast.dismiss("loading-toast");
+        toast.error(state.errorMessage, {
+          position: "top-right",
+          autoClose: 4000,
+          theme: "dark"
+        });
+      })
+      .addCase(removeGroupMember.pending, (state) => {
+        state.isLoading = true;
+        state.successMessage = "";
+        state.errorMessage = "";
+        toast.loading("removing...", {
+          id: "loading-toast",  // Set a specific ID to control this toast
+          position: "top-right",
+          autoClose: false,
+          theme: "dark"
+        });
+      })
+      .addCase(removeGroupMember.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.groups = state.groups.map((ele) => ele._id === action.payload.updatedChat?._id ? action.payload.updatedChat : ele)
+        state.selectedGroup = action.payload.updatedChat
+        state.successMessage = action.payload?.message || "Removed from group";
+        state.errorMessage = "";
+
+        // Dismiss the loading toast and show success message
+        toast.dismiss("loading-toast");
+        toast.success(state.successMessage, {
+          position: "top-right",
+          autoClose: 4000,
+          theme: "dark"
+        });
+      })
+      .addCase(removeGroupMember.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.successMessage = "";
+        state.errorMessage = action.payload || "failed to remove";
 
         // Dismiss the loading toast and show error message
         toast.dismiss("loading-toast");

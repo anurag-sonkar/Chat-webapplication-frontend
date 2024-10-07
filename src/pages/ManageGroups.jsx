@@ -8,7 +8,7 @@ import { resetSelectedUser } from '../features/users/userSlice';
 // Groups whose admin is auth user - fetched from separate API
 function ManageGroups() {
     const dispatch = useDispatch();
-    const { groups } = useSelector(state => state.group); // Array of groups
+    const { groups, isLoading } = useSelector(state => state.group); // Array of groups
     const [avatars, setAvatars] = useState({}); // Store avatars for each group
     const [extraAvatars, setExtraAvatars] = useState({}); // Store extra avatars for each group
     const [search, setSearch] = useState("")
