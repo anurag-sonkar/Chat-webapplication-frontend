@@ -2,15 +2,20 @@ import React, { lazy, useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import ChatsContainer from './components/ChatsContainer';
 import MessageContainer from './components/MessageContainer';
-import Authentication from './pages/Authentication';
 import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './routing/ProtectedRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import PublicRoute from './routing/PublicRoute';
 
-const FriendsChats = lazy(
-  () => import('./pages/FriendsChats')
+// import Authentication from './pages/Authentication';
+// const FriendsChats = lazy(
+//   () => import('./pages/FriendsChats')
+// )
+import FriendsChats from './pages/FriendsChats';
+const Authentication = lazy(
+  () => import('./pages/Authentication')
 )
+
 const Status = lazy(
   () => import('./pages/Status')
 )
@@ -30,12 +35,15 @@ const CreateNewGroup = lazy(
   () => import("./pages/CreateNewGroup")
 )
 
+const ManageGroups = lazy(
+  () => import('./pages/ManageGroups')
+)
+
 import { io } from 'socket.io-client'
 import { setOnlineUsers } from './features/users/userSlice';
 import { getAllNotifications, setNotification } from './features/notifications/notificationSlice';
 import { getAllChats } from './features/chats/chatSlice';
 import { setNewMessage } from './features/messages/messageSlice';
-import ManageGroups from './pages/ManageGroups';
 
 
 
@@ -73,7 +81,7 @@ function App() {
           dispatch(getAllChats())
           dispatch(getAllNotifications())
         })
-        
+
         // on new group added
         socket.on('group-chat', (data) => {
           console.log(data)

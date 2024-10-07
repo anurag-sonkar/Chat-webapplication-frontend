@@ -23,7 +23,7 @@ function FriendsChats() {
     const { chats , isLoading } = useSelector(state => state.chat)
     const dispatch = useDispatch()
 
-    console.log(chats)
+    // console.log(chats)
 
     useEffect(
         () => {

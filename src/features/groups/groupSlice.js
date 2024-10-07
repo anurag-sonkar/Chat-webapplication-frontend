@@ -57,6 +57,21 @@ export const removeGroupMember = createAsyncThunk(
   }
 );
 
+export const addNewGroupMembers = createAsyncThunk(
+  "group/addNewGroupMembers",
+  async (data, thunkAPI) => {
+    try {
+      const response = await groupService.addNewGroupMembers(data);
+      return response;
+    } catch (error) {
+      // Use `rejectWithValue` to return error message to reducer
+      return thunkAPI.rejectWithValue(
+        error?.response?.data?.message || "Something went wrong"
+      );
+    }
+  }
+);
+
 // export const updateAvatar = createAsyncThunk("auth/avatar", async (data, thunkAPI) => {
 //   console.log(data)
 //   try {
@@ -203,6 +218,46 @@ const groupSlice = createSlice({
         state.user = null;
         state.successMessage = "";
         state.errorMessage = action.payload || "failed to remove";
+
+        // Dismiss the loading toast and show error message
+        toast.dismiss("loading-toast");
+        toast.error(state.errorMessage, {
+          position: "top-right",
+          autoClose: 4000,
+          theme: "dark"
+        });
+      })
+      .addCase(addNewGroupMembers.pending, (state) => {
+        state.isLoading = true;
+        state.successMessage = "";
+        state.errorMessage = "";
+        toast.loading("adding new members...", {
+          id: "loading-toast",  // Set a specific ID to control this toast
+          position: "top-right",
+          autoClose: false,
+          theme: "dark"
+        });
+      })
+      .addCase(addNewGroupMembers.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.groups = state.groups.map((ele) => ele._id === action.payload.updatedMembers?._id ? action.payload.updatedMembers : ele)
+        state.selectedGroup = action.payload.updatedMembers
+        state.successMessage = action.payload?.message || "Members Added Successfully";
+        state.errorMessage = "";
+
+        // Dismiss the loading toast and show success message
+        toast.dismiss("loading-toast");
+        toast.success(state.successMessage, {
+          position: "top-right",
+          autoClose: 4000,
+          theme: "dark"
+        });
+      })
+      .addCase(addNewGroupMembers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.successMessage = "";
+        state.errorMessage = action.payload || "failed to add members";
 
         // Dismiss the loading toast and show error message
         toast.dismiss("loading-toast");

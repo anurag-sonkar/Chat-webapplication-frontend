@@ -19,8 +19,14 @@ const removeGroupMember = async(data)=>{
   return response.data
 }
 
+const addNewGroupMembers = async(data)=>{
+  const response = await axios.put(`${chat_base_url}/addgroupmember` ,data , getConfig())
+  console.log(response)
+  return response.data
+
+}
 const groupService = {
-  getAllMyGroups, updateGroupName, removeGroupMember
+  getAllMyGroups, updateGroupName, removeGroupMember, addNewGroupMembers
 }
 
 export default groupService;

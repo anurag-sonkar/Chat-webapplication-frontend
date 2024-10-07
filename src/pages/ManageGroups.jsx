@@ -12,6 +12,7 @@ function ManageGroups() {
     const [avatars, setAvatars] = useState({}); // Store avatars for each group
     const [extraAvatars, setExtraAvatars] = useState({}); // Store extra avatars for each group
     const [search, setSearch] = useState("")
+    const { selectedGroup } = useSelector((state) => state.group)
 
 
     useEffect(() => {
@@ -96,7 +97,7 @@ function ManageGroups() {
             {/* group cards */}
             <div className='grid gap-6 overflow-y-scroll custom-scrollbar px-2 py-4'>
                 {groups?.map((group) => (
-                    <div className='flex flex-col'>
+                    <div className={`flex flex-col ${selectedGroup?._id === group?._id ? "" : ""}`}>
                         <div key={group._id} className='flex flex-col items-center justify-between cursor-pointer' >
                             <div>
                                 <Avatar.Group maxCount={6} size={50} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
