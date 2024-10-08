@@ -8,9 +8,12 @@ import { sendMessage } from '../features/messages/messageSlice';
 import { io } from 'socket.io-client';
 const socket = io('http://192.168.43.195:8000')
 import EmojiPicker from 'emoji-picker-react';
+import { GrAttachment } from 'react-icons/gr';
+import MessageAttachments from './MessageAttachments';
+
 
 function MessageInput({ showEmojiPicker, setShowEmojiPicker }) {
-
+    const [open, setOpen] = useState(true);
     const [message, setMessage] = useState('')
     // const [showEmojiPicker, setShowEmojiPicker] = useState(false) -- moving to parent component inorder to close emoji when click on body
     const { selectedChat } = useSelector(state => state.chat)
@@ -78,7 +81,10 @@ function MessageInput({ showEmojiPicker, setShowEmojiPicker }) {
                         </div>
                     )}
                 </div>
-                <div className='cursor-pointer'><FaPlus size={25} /></div>
+                {/* message attachmnets */}
+                
+                {/* <div className='cursor-pointer'><GrAttachment size={25} /></div> */}
+                <div className=''><MessageAttachments/></div>
             </div>
 
             <div className='w-full relative'>
