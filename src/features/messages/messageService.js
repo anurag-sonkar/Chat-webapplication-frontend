@@ -13,7 +13,7 @@ const getAllMessages = async (id) => {
 }
 
 const sendMessage = async(data)=>{
-  console.log(data)
+  console.log("data",data)
   const response = await axios.post(`${message_base_url}/message` , data , getConfig())
   console.log(response)
   return response.data

@@ -10,6 +10,9 @@ import { setTypingUser } from '../features/messages/messageSlice';
 import Loading from './Loading';
 const socket = io('http://192.168.43.195:8000')
 import { format, isToday, isYesterday } from 'date-fns'; // For date formatting
+import Preview from './Preview';
+import { RxCross2 } from 'react-icons/rx';
+import { clearPreview } from '../features/previews/previewSlice';
 
 function Chat() {
   const [id , setId] = useState('') // selected user / group
@@ -21,18 +24,33 @@ function Chat() {
   const messageEndRef = useRef(null)
   const [showEmojiPicker, setShowEmojiPicker] = useState(false) // used in message input
   const { selectedChat } = useSelector(state => state.chat)
-  const { messages, typingUser } = useSelector(state => state.message)
+  const { messages, typingUser , isLoading} = useSelector(state => state.message)
   const { user } = useSelector(state => state.auth)
+  const {preview} = useSelector(state =>state.preview)
+  const [loading , setLoading] = useState(false) // show when attchment is sending
   const dispatch = useDispatch()
   // console.log(selectedChat?.members?.[0])
   // console.log(messages)
 
   // Scroll to the bottom when new messages arrive
+  // my code ***************************************
+  // useEffect(() => {
+  //   if (messageEndRef.current) {
+  //     messageEndRef.current.scrollIntoView({ behavior: 'smooth' })
+  //   }
+  // }, [preview,messages, typingUser, selectedChat]) // This will trigger when messages change
+
+  // chat gpt - suggestion ***********************************
+  // Scroll to the bottom when new messages arrive or preview is added
   useEffect(() => {
-    if (messageEndRef.current) {
-      messageEndRef.current.scrollIntoView({ behavior: 'smooth' })
-    }
-  }, [messages, typingUser]) // This will trigger when messages change
+    // Ensure DOM is fully updated before scrolling
+    setTimeout(() => {
+      if (messageEndRef.current) {
+        messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100); // Delay to ensure the DOM is updated
+  }, [messages, preview, typingUser, selectedChat]); // Trigger scroll on all key state changes
+
 
   // typing
   useEffect(() => {
@@ -125,14 +143,6 @@ function Chat() {
 
       {/* --------------------------------------------------------------- */}
       {/* chat messages */}
-      {/* <div className='h-[80vh] w-full bg-white overflow-y-scroll px-4 py-2'>
-        {
-          messages?.length > 0 && messages?.map((message, index) => <Message key={message?._id} chat={message} />)
-        }
-        <div ref={messageEndRef} className='relative h-6'>{typingUser === user?._id && <Loading />}</div>
-
-      </div> */}
-
       <div className='h-[80vh] w-full bg-white overflow-y-scroll px-4 py-2' onClick={() => setShowEmojiPicker(false)}>
         {
           messages?.length > 0 && messages.map((message, index) => {
@@ -149,14 +159,43 @@ function Chat() {
             )
           })
         }
+        
+        
+      {/* preview when availble */}
+         {/* {
+          preview && <div className='p-4 min-h-16 bg-blue-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100'>
+            <div><RxCross2 size={30}/></div>
+            <div><Preview /></div>
+          {isLoading && <Loading />}
+          </div>
+         } */}
+        {
+          preview && (
+            <div className='preview-bg relative p-4 min-h-16 bg-blue-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100'>
+              <div className='absolute top-0 right-0 p-2 cursor-pointer'>
+                <RxCross2 size={30} onClick={() => dispatch(clearPreview())}/>
+              </div>
+              <Preview />
+              {/* Loading visibility */}
+              {loading && (
+                <div className="flex justify-center items-center mt-2">
+                  <Loading /> {/* Ensure Loading has proper styles and visibility */}
+                </div>
+              )}
+            </div>
+          )
+        }
+
         <div ref={messageEndRef} className='relative h-6'>
           {typingUser === user?._id && <Loading />}
         </div> {/* scroll till bottom message */}
+
       </div>
+
 
       {/* chat - input */}
       <div>
-        <MessageInput showEmojiPicker={showEmojiPicker} setShowEmojiPicker={setShowEmojiPicker}/>
+        <MessageInput showEmojiPicker={showEmojiPicker} setShowEmojiPicker={setShowEmojiPicker} setLoading={setLoading}/>
       </div>
     </div>
   )

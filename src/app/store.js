@@ -5,7 +5,7 @@ import notificationReducer from "../features/notifications/notificationSlice";
 import chatReducer from "../features/chats/chatSlice"
 import messageReducer from "../features/messages/messageSlice"
 import groupReducer from "../features/groups/groupSlice"
-
+import previewReducer from "../features/previews/previewSlice"
 
 export const store = configureStore({
     reducer:{
@@ -14,7 +14,8 @@ export const store = configureStore({
         notification : notificationReducer,
         chat: chatReducer,
         message : messageReducer,
-        group : groupReducer
+        group : groupReducer,
+        preview: previewReducer
 
     }
 
