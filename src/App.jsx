@@ -16,15 +16,15 @@ const Authentication = lazy(
   () => import('./pages/Authentication')
 )
 
-const Status = lazy(
-  () => import('./pages/Status')
-)
+// const Status = lazy(
+//   () => import('./pages/Status')
+// )
 const GroupsChats = lazy(
   () => import('./pages/GroupsChats')
 )
-const FriendRequests = lazy(
-  () => import('./pages/FriendRequests')
-)
+// const FriendRequests = lazy(
+//   () => import('./pages/FriendRequests')
+// )
 const SearchUsers = lazy(
   () => import('./pages/SearchUsers')
 )
@@ -109,10 +109,10 @@ function App() {
         {/* Left side - ChatsContainer */}
         <Route path='chat' element={<ProtectedRoute><ChatsContainer /></ProtectedRoute>}>
           <Route index element={<FriendsChats />} />
-          <Route path='status' element={<Status />} />
+          {/* <Route path='status' element={<Status />} /> */}
           <Route path='create-new-group' element={<CreateNewGroup />} />
           <Route path='groups' element={<GroupsChats />} />
-          <Route path='friend-requests' element={<FriendRequests />} />
+          {/* <Route path='friend-requests' element={<FriendRequests />} /> */}
           <Route path='manage-groups' element={<ManageGroups />} />
           <Route path='search-users' element={<SearchUsers />} />
           <Route path='profile' element={<Profile />} />

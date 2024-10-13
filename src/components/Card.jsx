@@ -4,8 +4,9 @@ import { resetSelectedUser, setSelectedUser } from '../features/users/userSlice'
 import { useLocation } from 'react-router-dom';
 import { resetSelectedChat, setFriendChat } from '../features/chats/chatSlice';
 import { resetSelectedGroup } from '../features/groups/groupSlice';
+import { format } from 'date-fns'; // For date formatting
 
-function Card({ _id, name, avatar, email }) {
+function Card({ _id, name, avatar, email, createdAt }) {
     const dispatch = useDispatch()
     const { onlineUsers } = useSelector(state => state.user)
     const { selectedChat } = useSelector(state => state.chat)
@@ -38,8 +39,8 @@ function Card({ _id, name, avatar, email }) {
                         <div className='text-xs font-semibold'>{email}</div>
                     </div>
                 </div>
-                <div className='flex flex-col gap-1 items-end'>
-                    <div className=' '>45:00:30</div>
+                <div className='flex flex-col items-end'>
+                    <div className='text-xs font-semibold'>{format(new Date(createdAt), 'dd/MM/yyyy')}</div>
                     <div className=''>{onlineUsers?.includes(_id) ? <img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/40C057/full-stop--v1.png" alt="full-stop--v1" /> : <img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/FA5252/full-stop--v1.png" alt="full-stop--v1" />}</div>
                 </div>
 

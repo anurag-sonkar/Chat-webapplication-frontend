@@ -67,26 +67,28 @@ function GroupChatCard({ groupChat }) {
     return (
         <div className='grid gap-2 mt-2 mx-1 cursor-pointer' onClick={() => setUser(groupChat?._id)} >
 
-            <div className={`transition-all ease-in-out duration-150  hover:bg-[#22313f] hover:text-white rounded-md flex items-center justify-between p-4 bg-[#e7f1ff]  shadow-lg ${selectedChat?._id === groupChat?._id ? "bg-[#005792] text-white" : "bg-[#73b1c1]"}`}>
-                <div>
-                    <Avatar.Group maxCount={4} size={40} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-                        {avatar?.map((ele, index) => (
-                            <Avatar src={ele} key={index} />
-                        ))}
+            <div className={`transition-all ease-in-out duration-150  hover:bg-[#22313f] hover:text-white rounded-md flex items-center justify-between px-4 py-3 bg-[#e7f1ff]  shadow-lg ${selectedChat?._id === groupChat?._id ? "bg-[#22313f] text-white" : "bg-[#73b1c1]"}`}>
+                <div className=''>
+                    <div>
+                        <Avatar.Group maxCount={4} size={40} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
+                            {avatar?.map((ele, index) => (
+                                <Avatar src={ele} key={index} />
+                            ))}
 
-                        {groupChat?.members?.length > 3 && (
-                            <Popover content={ExtraAvatarsPopover}>
-                                <Avatar>+{groupChat?.members?.length - 3}</Avatar>
-                            </Popover>
-                        )}
-                    </Avatar.Group>
-                </div>
-                {/*name*/}
-                <div className='font-semibold text-lg'>
-                    {groupChat?.name}
+                            {groupChat?.members?.length > 3 && (
+                                <Popover content={ExtraAvatarsPopover}>
+                                    <Avatar>+{groupChat?.members?.length - 3}</Avatar>
+                                </Popover>
+                            )}
+                        </Avatar.Group>
+                    </div>
+                    {/*name*/}
+                    <div className='font-semibold text-lg'>
+                        {groupChat?.name}
 
+                    </div>
                 </div>
-                <div className='font-semibold text-xs'>
+                <div className='font-semibold text-sm'>
                     {activeMembers && activeMembers}/{groupChat?.members?.length} active
 
                 </div>

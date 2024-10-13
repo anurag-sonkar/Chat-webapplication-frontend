@@ -70,11 +70,11 @@ const ChatsContainer = () => {
                   icon: <BsFillChatSquareTextFill style={{ fontSize: '22px' }} />,
                   label: <Link to='/chat'>Chats</Link>,
                 },
-                {
-                  key: 'status',
-                  icon: <FaCircleNotch style={{ fontSize: '22px' }} />,
-                  label: <Link to='/chat/status'>Status</Link>,
-                },
+                // {
+                //   key: 'status',
+                //   icon: <FaCircleNotch style={{ fontSize: '22px' }} />,
+                //   label: <Link to='/chat/status'>Status</Link>,
+                // },
                 {
                   key: 'New Group',
                   icon: <MdGroupAdd style={{ fontSize: '22px' }} />,
@@ -85,11 +85,11 @@ const ChatsContainer = () => {
                   icon: <MdGroups style={{ fontSize: '22px' }} />,
                   label: <Link to='/chat/groups'>Groups</Link>,
                 },
-                {
-                  key: 'requests',
-                  icon: <FaUserFriends style={{ fontSize: '22px' }} />,
-                  label: <Link to='/chat/friend-requests'>Friend Requests</Link>,
-                },
+                // {
+                //   key: 'requests',
+                //   icon: <FaUserFriends style={{ fontSize: '22px' }} />,
+                //   label: <Link to='/chat/friend-requests'>Friend Requests</Link>,
+                // },
                 {
                   key: 'manage-groups',
                   icon: <HiViewGridAdd style={{ fontSize: '22px' }} />,

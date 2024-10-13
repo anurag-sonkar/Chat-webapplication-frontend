@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import toast from 'react-hot-toast';  // Import toast here
+import toast from 'react-hot-toast';  
 import chatService from "./chatService";
 
 const initialState = {
@@ -68,7 +68,9 @@ const chatSlice = createSlice({
         );
       });
       state.chats = filteredChats
-    }
+    },
+    // last online status update when socket event triggegr
+    
   },
   extraReducers: (builder) => {
     builder

@@ -116,7 +116,7 @@ function ManageGroups() {
 
 
                         </div>
-                        <button onClick={() => handleManageGroup(group?._id)} className="btn btn-active btn-ghost btn-sm mb-2">Manage</button>
+                        <button onClick={() => handleManageGroup(group?._id)} className={`btn btn-active  btn-sm mb-2 ${selectedGroup?._id === group?._id ? "btn-neutral" : "btn-ghost"}`}>Manage</button>
                         <hr></hr>
                     </div>
                 ))}

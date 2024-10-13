@@ -79,7 +79,7 @@ function Message({ chat }) {
                     <a
                         href={url}
                         download // Triggers direct download
-                        className="text-blue-500 underline mt-2 inline-block hidden"
+                        className="text-blue-500 underline mt-2 hidden"
                     >
                     </a>
                 </div>

@@ -6,6 +6,7 @@ import { FaFileVideo, FaImage } from 'react-icons/fa6';
 import { FaFileAlt } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { addPreview } from '../features/previews/previewSlice';
+import { FcAudioFile } from 'react-icons/fc';
 
 function MessageAttachments({ setAttachments, open, setOpen }) {
     const dispatch = useDispatch()
@@ -41,13 +42,13 @@ function MessageAttachments({ setAttachments, open, setOpen }) {
                 <ImAttachment size={25} />
             </button>
             {open && (
-                <div className='absolute flex flex-col gap-2 bottom-10 left-0 bg-white p-2 shadow-md rounded-md'>
+                <div className='absolute flex flex-col gap-2 bottom-10 left-0 bg-white p-2 shadow-md rounded-md w-44'>
                     {/* Replace FloatButtons with normal buttons or icons */}
                     {/* image select */}
                     <div>
                         <input type='file' accept='image/*' id='images' className='hidden' onChange={(e)=>handleAttachmentSelect(e)}/>
                         <label className="p-2 hover:bg-gray-100 rounded-lg flex gap-3 items-center" htmlFor='images'>
-                            <MdAudioFile size={20} />
+                            <FaImage size={20} />
                             <p className='font-semibold text-sm'>Image</p>
                         </label>
                     </div>
@@ -63,7 +64,7 @@ function MessageAttachments({ setAttachments, open, setOpen }) {
                     <div>
                         <input type='file' accept='video/*' id='video' className='hidden' onChange={(e)=>handleAttachmentSelect(e)} />
                         <label className="p-2 hover:bg-gray-100 rounded-lg flex gap-3 items-center" htmlFor='video'>
-                            <MdAudioFile size={20} />
+                            <FaFileVideo size={20} />
                             <p className='font-semibold text-sm'>Video</p>
                         </label>
                     </div>
