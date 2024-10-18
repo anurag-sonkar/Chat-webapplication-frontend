@@ -14,6 +14,7 @@ function CreateNewGroup() {
     const [groupName, setGroupName] = useState("") // gp name
     const [groupImage, setGroupImage] = useState("") // gp image
     const [active, setActive] = useState(false)
+    const [dropdown , setDropdown] = useState(true)
     const dispatch = useDispatch()
     let formData = new FormData();
 
@@ -84,20 +85,27 @@ function CreateNewGroup() {
         [members]
     )
 
+    const handleDropdownClose = ()=>{
+        if(members.length >= 2){
+
+            setDropdown(false)
+        }else{
+            return
+        }
+    }
 
     return (
         <div className='h-full w-full relative'>
-            <div>
+            <div onClick={()=>setDropdown(true)}>
                 <Select
                     autoFocus={true}
                     size='large'
-                    open="true"
+                    open={dropdown}
                     mode="multiple"
                     style={{
                         width: '100%',
                     }}
                     placeholder="Select Group Members min 2 required"
-                    //   defaultValue={['china']}
                     onChange={handleChange}
                     filterOption={(inputValue, option) => option?.label.toLowerCase().includes(inputValue.toLowerCase())}
                     maxCount={maxMembersAllowed}
@@ -115,7 +123,7 @@ function CreateNewGroup() {
             </div>
 
             {/* group image upload preview */}
-            <div className='absolute bottom-0 min-w-full grid gap-2 '>
+            <div className='absolute bottom-0 min-w-full grid gap-2 ' onClick={handleDropdownClose}>
                 <div className='flex items-center justify-center mb-2'>
                     <div className='w-36 h-36  rounded-full relative cursor-pointer'>
                         <img src={imagePreview ? imagePreview : '/assets/profile-placeholder.jpeg'} alt='upload avatar' className='rounded-full' />
