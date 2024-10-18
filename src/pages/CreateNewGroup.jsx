@@ -95,7 +95,7 @@ function CreateNewGroup() {
     }
 
     return (
-        <div className='h-full w-full relative'>
+        <div className='max-h-[84vh] h-screen w-full relative'>
             <div onClick={()=>setDropdown(true)}>
                 <Select
                     autoFocus={true}

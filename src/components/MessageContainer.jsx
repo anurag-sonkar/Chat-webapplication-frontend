@@ -14,7 +14,7 @@ function MessageContainer() {
 
 
   return (
-    <div className='bg-blue-50 w-[60%] h-[100vh] grid place-items-center'>
+    <div className='h-screen bg-blue-50 w-[60%] grid place-items-center'>
       {/* if no user selected then show */}
       {
         user &&

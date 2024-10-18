@@ -79,7 +79,7 @@ function ManageGroups() {
     }
 
     return (
-        <div>
+        <div className=''>
             {/* Search input box -1 for friends only */}
             <label className="input input-bordered flex items-center gap-2">
                 <input type="text" className="grow" placeholder="Search" value={search} onChange={handleSearchFriend} />

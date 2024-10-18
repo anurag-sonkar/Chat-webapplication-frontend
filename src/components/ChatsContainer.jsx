@@ -48,12 +48,12 @@ const ChatsContainer = () => {
   
 
   return (
-    <Layout className='h-screen'>
+    <Layout className='lg:h-screen h-full'>
       <Sider
         trigger={null}
         collapsible
         collapsed={true}
-        style={{ background: colorBgLayout, height: "100vh", backgroundColor: "#fff", borderRight: '1px solid #E3E3E3' }}  // Seting the background explicitly
+        style={{ background: colorBgLayout, backgroundColor: "#fff", borderRight: '1px solid #E3E3E3' }}  // Seting the background explicitly
       >
         {/* <div className="demo-logo-vertical" /> */}
         <div className='flex flex-col h-full py-2'>
