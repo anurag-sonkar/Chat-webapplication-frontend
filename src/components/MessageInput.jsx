@@ -27,7 +27,7 @@ function MessageInput({ showEmojiPicker, setShowEmojiPicker , setLoading }) {
     const typingTimeout = useRef(null)
 
     const [attachments , setAttachments] = useState([]) // img,video,audio,file
-    console.log(attachments)
+    // console.log(attachments)
 
     const handleMessageInput = (e) => {
         const message = e.target.value
@@ -64,7 +64,7 @@ function MessageInput({ showEmojiPicker, setShowEmojiPicker , setLoading }) {
                 const res = await axios.post('https://api.cloudinary.com/v1_1/dj6iduopf/auto/upload', data);
 
                 // Log and return Cloudinary response data (URL, public_id)
-                console.log(res.data);
+                // console.log(res.data);
                 // return {
                 //     url: res.data.secure_url, // Cloudinary file URL
                 //     public_id: res.data.public_id, // Cloudinary file ID

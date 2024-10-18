@@ -13,7 +13,6 @@ const search = async (search) => {
 
 const sendFriendRequest = async (userId) => {
   const response = await axios.put(`${user_base_url}/sendrequest`, {userId}, getConfig())
-  console.log(response)
   return response?.data
 }
 
@@ -22,7 +21,6 @@ const acceptFriendRequest = async (requestId) => {
     requestId , accept : true
   }
   const response = await axios.put(`${user_base_url}/acceptrequest`, data ,getConfig())
-  console.log(response)
   return
 }
 

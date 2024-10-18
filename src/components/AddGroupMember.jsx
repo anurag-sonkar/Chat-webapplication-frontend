@@ -16,7 +16,7 @@ function AddGroupMember({ isActive }) {
     const handleChange = (value) => {
         setMembers(value)
     };
-    console.log(members)
+    // console.log(members)
 
 
     useEffect(

@@ -28,7 +28,6 @@ export const getAllChats = createAsyncThunk(
 export const createNewGroup = createAsyncThunk(
   "chat/createNewGroup",
   async (data, thunkAPI) => {
-    // console.log(...data)
     try {
       const response = await chatService.createNewGroup(data);
       return response;
@@ -51,7 +50,6 @@ const chatSlice = createSlice({
       if(selectedUser === undefined){ // group chat
         selectedUser = state.chats.find((chat)=>chat._id === action.payload)
       }
-      // console.log(selectedUser ,"check")
       state.selectedChat = selectedUser;
 
       
@@ -60,7 +58,6 @@ const chatSlice = createSlice({
       state.selectedChat = null
     },
     filterChats : (state , action)=>{
-      console.log(action.payload)
       const filteredChats = state.chats.filter(chat => {
         return chat.members.some(member =>
           member.name.toLowerCase().includes(action.payload.toLowerCase()) ||

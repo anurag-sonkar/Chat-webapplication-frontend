@@ -20,7 +20,7 @@ function Signup() {
     const [imagePreview, setImagePreview] = useState("");
     const [error, setError] = useState({});
     const [catchError, setCatchError] = useState(""); // backend error
-    console.log(image)
+    // console.log(image)
     // Creating refs for each label
     const nameLabelRef = useRef(null);
     const emailLabelRef = useRef(null);
@@ -107,8 +107,6 @@ function Signup() {
         }
 
         if (catchError) return
-
-        console.log(name, email, password, confirmPassword, gender, image)
 
         const registerPromise = dispatch(register(formData)).unwrap();
         registerPromise.then(

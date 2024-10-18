@@ -14,7 +14,6 @@ const initialState = {
 export const search = createAsyncThunk(
   "user/search",
   async (data, thunkAPI) => {
-    console.log(data)
     try {
       const response = await userService.search(data);
       return response;

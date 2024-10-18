@@ -18,7 +18,7 @@ function Message({ chat }) {
     const renderChatMessage = (message , attachment) => {
         // const { name, type, url } = file;
         const {public_id , url , _id} = attachment
-        console.log(attachment)
+        // console.log(attachment)
 
         // Function to download image
         const downloadImage = (url, fileName) => {

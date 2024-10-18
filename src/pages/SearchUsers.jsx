@@ -9,7 +9,6 @@ function SearchUsers() {
 
 const dispatch = useDispatch()
 
-console.log(users)
     const handleSearch = (e)=>{
         e.preventDefault();
 

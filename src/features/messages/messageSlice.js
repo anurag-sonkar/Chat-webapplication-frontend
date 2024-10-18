@@ -28,9 +28,7 @@ export const getAllMessages = createAsyncThunk(
 export const sendMessage = createAsyncThunk(
   "message/sendMessage",
   async (data, thunkAPI) => {
-    console.log(data)
     try {
-      console.log(data)
       const response = await messageService.sendMessage(data);
       return response;
     } catch (error) {

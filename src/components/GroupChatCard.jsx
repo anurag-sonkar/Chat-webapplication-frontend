@@ -59,7 +59,7 @@ function GroupChatCard({ groupChat }) {
                 .filter((member) => onlineUsers.includes(member._id))
                 .map((member) => member._id); // Map to ids after filtering
 
-            console.log("Number of active online group members:", onlineGroupMembers.length);
+            // console.log("Number of active online group members:", onlineGroupMembers.length);
             setActiveMembers(onlineGroupMembers.length)
         }
     }, [groupChat, onlineUsers]);

@@ -15,13 +15,11 @@ const updateGroupName = async(data)=>{
 
 const removeGroupMember = async(data)=>{
   const response = await axios.put(`${chat_base_url}/removegroupmember` ,data , getConfig())
-  console.log(response)
   return response.data
 }
 
 const addNewGroupMembers = async(data)=>{
   const response = await axios.put(`${chat_base_url}/addgroupmember` ,data , getConfig())
-  console.log(response)
   return response.data
 
 }

@@ -28,7 +28,6 @@ export const getAllMyGroups = createAsyncThunk(
 export const updateGroupName = createAsyncThunk(
   "group/updateGroupName",
   async (data, thunkAPI) => {
-    console.log(data)
     try {
       const response = await groupService.updateGroupName(data);
       return response;
@@ -44,7 +43,6 @@ export const updateGroupName = createAsyncThunk(
 export const removeGroupMember = createAsyncThunk(
   "group/removeGroupMember",
   async (data, thunkAPI) => {
-    console.log(data)
     try {
       const response = await groupService.removeGroupMember(data);
       return response;
@@ -89,7 +87,6 @@ const groupSlice = createSlice({
   initialState,
   reducers: {
     setGroupChat: (state, action) => {
-      console.log(action.payload)
       let selectedSpecificGroup = state.groups.find((group) => group._id === action.payload);
       state.selectedGroup = selectedSpecificGroup;
     },

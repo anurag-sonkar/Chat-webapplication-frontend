@@ -35,7 +35,6 @@ const updateAvatar = async(data)=>{
 
 const login = async (data) => {
   const response = await axios.post(`${auth_base_url}/login`, data);
-console.log(response)
   if (response.status === 200) {
     localStorage.setItem('user-info', JSON.stringify(response?.data?.response))
   }
@@ -44,45 +43,6 @@ console.log(response)
 
 
 }
-
-
-
-
-
-
-// const signOut = async ()=>{
-//     const response = await axios.put(`${auth_base_url}/logout`,{}, getConfig())
-//     if(response.data){
-//       ['user', 'collapsed', 'selectedKey', 'dashboardThemeState' , 'tour' , 'offline-image'].forEach((key) => localStorage.removeItem(key));
-//     }
-//     // console.log(response.data)
-//     return response.data
-    
-// }
-
-
-
-// const forgotPassword = async (data)=>{
-//   const response = await axios.post(`${auth_base_url}/auth/forgot-password` , data)
-//   console.log(response)
-//   return response.data
-// }
-
-// const resetPassword = async (data)=>{
-//   try {
-//       const {password ,token} = data
-//   const response = await axios.put(`${auth_base_url}/auth/reset-password/${token}` , {password})
-//   console.log(response)
-//   return response.data
-//   } catch (error) {
-//       return error.message
-      
-//   }
-// }
-
-
-
-
 
 const authService = {
     
