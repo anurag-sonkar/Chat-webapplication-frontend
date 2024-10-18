@@ -14,7 +14,7 @@ function Authentication() {
             {
                 isLoading && <Loading />
             }
-            <div className='w-[420px] min-h-[92vh] bg-gray-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 py-1'>
+            <div className='w-[420px] max-h-screen  bg-gray-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 pb-8'>
                 <div className='text-center'>
                     <Tabs
                         defaultActiveKey="1"

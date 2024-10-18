@@ -44,6 +44,7 @@ import { setOnlineUsers } from './features/users/userSlice';
 import { getAllNotifications, setNotification } from './features/notifications/notificationSlice';
 import { getAllChats } from './features/chats/chatSlice';
 import { setNewMessage } from './features/messages/messageSlice';
+import { user_base_url } from './utils/base_url';
 
 
 
@@ -56,7 +57,7 @@ function App() {
   useEffect(
     () => {
       if (user) {
-        const socket = io('http://192.168.43.195:8000', {
+        const socket = io(`${user_base_url}`, {
           query: {
             userId: user?._id
           }
