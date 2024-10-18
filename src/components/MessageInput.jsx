@@ -6,12 +6,13 @@ import { FaPlus } from "react-icons/fa6";
 import { useDispatch, useSelector } from 'react-redux'
 import { sendMessage } from '../features/messages/messageSlice';
 import { io } from 'socket.io-client';
-const socket = io('http://192.168.43.195:8000')
 import EmojiPicker from 'emoji-picker-react';
 import { GrAttachment } from 'react-icons/gr';
 import MessageAttachments from './MessageAttachments';
 import axios from 'axios';
 import { clearPreview } from '../features/previews/previewSlice';
+import { user_base_url } from '../utils/base_url';
+const socket = io(`${user_base_url}`)
 
 
 function MessageInput({ showEmojiPicker, setShowEmojiPicker , setLoading }) {

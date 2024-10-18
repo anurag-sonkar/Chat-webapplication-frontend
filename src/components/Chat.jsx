@@ -8,11 +8,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
 import { setTypingUser } from '../features/messages/messageSlice';
 import Loading from './Loading';
-const socket = io('http://192.168.43.195:8000')
 import { format, isToday, isYesterday } from 'date-fns'; // For date formatting
 import Preview from './Preview';
 import { RxCross2 } from 'react-icons/rx';
 import { clearPreview } from '../features/previews/previewSlice';
+import { user_base_url } from '../utils/base_url';
+const socket = io(`${user_base_url}`)
 
 function Chat() {
   const [id , setId] = useState('') // selected user / group
