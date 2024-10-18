@@ -47,7 +47,6 @@ function Login() {
     const handleLoginWithGuestCredentials = (e)=>{
         setEmail('guestlogin02251@gmail.com')
         setPassword('123456')
-        handleLogin(e)
 
     }
 
