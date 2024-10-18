@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { search } from '../features/users/userSlice';
 import Card  from '../components/Card';
@@ -17,6 +17,13 @@ console.log(users)
 
     }
 
+
+    // showing some users 
+    useEffect(
+        ()=>{
+            dispatch(search("@"))
+        }, []
+    )
 
     
     
@@ -55,9 +62,11 @@ console.log(users)
 
                 </button>
             </div>
-
             {/* serach reposne */}
             <div className='custom-scrollbar'>
+            {
+                    searchKeyword === "" && <div className='text-2xl mt-4 px-1 font-semibold text-gray-400'>Friend Recommandations</div>
+            }
             {
                     users?.length > 0 && users.map((user) => <Card key={user._id} {...user} />) 
             }

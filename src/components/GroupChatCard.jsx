@@ -12,7 +12,7 @@ function GroupChatCard({ groupChat }) {
     const { onlineUsers } = useSelector(state => state.user)
     const { selectedChat } = useSelector(state => state.chat)
     const [activeMembers , setActiveMembers] = useState('')
-
+   
     useEffect(() => {
         // making group avatar
         if (groupChat?.members) {
@@ -67,7 +67,7 @@ function GroupChatCard({ groupChat }) {
     return (
         <div className='grid gap-2 mt-2 mx-1 cursor-pointer' onClick={() => setUser(groupChat?._id)} >
 
-            <div className={`transition-all ease-in-out duration-150  hover:bg-[#22313f] hover:text-white rounded-md flex items-center justify-between px-4 py-3 bg-[#e7f1ff]  shadow-lg ${selectedChat?._id === groupChat?._id ? "bg-[#22313f] text-white" : "bg-[#73b1c1]"}`}>
+            <div className={`transition-all ease-in-out duration-150  hover:bg-[#22313f] hover:text-white rounded-md flex items-center justify-between px-4 py-3  shadow-lg ${selectedChat?._id == groupChat?._id ? "bg-[#22313f] text-white" : "bg-[#73b1c1]"}`}>
                 <div className=''>
                     <div>
                         <Avatar.Group maxCount={4} size={40} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>

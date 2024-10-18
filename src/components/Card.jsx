@@ -27,7 +27,7 @@ function Card({ _id, name, avatar, email, createdAt }) {
     }
     return (
         <div className='grid gap-2 mt-2 mx-1 cursor-pointer' onClick={() => setUser(_id)}>
-            <div className={`transition-all ease-in-out duration-150  hover:bg-[#22313f] hover:text-white rounded-md flex py-4 justify-between px-5 items-center ${selectedChat?.members?.[0]._id === _id ? "bg-[#005792] text-white" : "bg-[#73b1c17b]"}`}>
+            <div className={`transition-all ease-in-out duration-150  hover:bg-[#22313f] hover:text-white rounded-md flex py-4 justify-between px-5 items-center ${selectedChat?.members?.[0]._id === _id ? "bg-[#005792] text-white" : "shadow-md shadow-gray-500"}`}>
                 <div className='flex gap-8'>
                     <div className="avatar">
                         <div className="ring-primary ring-offset-base-100 w-12 rounded-full ring ring-offset-2">
