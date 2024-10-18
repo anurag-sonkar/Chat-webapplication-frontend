@@ -10,52 +10,39 @@ import toast from 'react-hot-toast';
 function ChatMenu({ children }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const handleLogout = () => {
-        // loading start
+    const handleLogout = async () => {
         toast.loading("loading...", {
-            id: "loading-toast",  // Set a specific ID to control this toast
+            id: "loading-toast",
             position: "top-right",
             autoClose: false,
             theme: "dark"
         });
 
         try {
-            const user = localStorage.getItem("user-info")
+            localStorage.removeItem('user-info');
+            localStorage.removeItem('selectedKey');
 
-            if (user) {
-                localStorage.removeItem('user-info');
+            await dispatch(reset());  // Await the reset action
 
-            }
-
-            const selectedKey = localStorage.getItem('selectedKey')
-
-            if (selectedKey) {
-
-                localStorage.removeItem('selectedKey')
-            }
-
-            dispatch(reset())
-
-                toast.dismiss("loading-toast");
-                toast.success("logout successfully", {
-                    position: "top-right",
-                    autoClose: 4000,
-                    theme: "dark"
-                });
-                navigate('/')
-        } catch (error) {
             toast.dismiss("loading-toast");
-            toast.error(error.message || 'logout failed', {
+            toast.success("Logout successful", {
                 position: "top-right",
                 autoClose: 4000,
                 theme: "dark"
             });
 
+            navigate('/');
+
+        } catch (error) {
+            toast.dismiss("loading-toast");
+            toast.error(error.message || 'Logout failed', {
+                position: "top-right",
+                autoClose: 4000,
+                theme: "dark"
+            });
         }
+    };
 
-
-
-    }
     const items = [
         {
             label: <div className='flex items-center gap-2'>
