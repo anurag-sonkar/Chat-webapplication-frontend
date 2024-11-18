@@ -112,7 +112,7 @@ function Chat() {
   return (
     <div className='h-screen w-full border-1'>
       {/* chat - header */}
-      <div className='flex justify-between bg-[#F0F2F5] px-4 py-2 items-center' onClick={() => setShowEmojiPicker(false)}>
+      <div className='flex justify-between bg-[#F0F2F5] px-4 py-2 items-center'>
         <div className='flex items-center gap-4'> {/* left div */}
           {/* avatar */}
           <div className="avatar">
@@ -144,7 +144,7 @@ function Chat() {
 
       {/* --------------------------------------------------------------- */}
       {/* chat messages */}
-      <div className='lg:h-[80vh] h-screen w-full bg-white overflow-y-scroll px-4 py-2' onClick={() => setShowEmojiPicker(false)}>
+      <div className='lg:h-[80vh] h-screen w-full bg-white overflow-y-scroll px-4 py-2'>
         {
           messages?.length > 0 && messages.map((message, index) => {
             const showDateHeader = index === 0 || formatDate(messages[index - 1]?.createdAt) !== formatDate(message?.createdAt);
@@ -163,13 +163,6 @@ function Chat() {
         
         
       {/* preview when availble */}
-         {/* {
-          preview && <div className='p-4 min-h-16 bg-blue-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100'>
-            <div><RxCross2 size={30}/></div>
-            <div><Preview /></div>
-          {isLoading && <Loading />}
-          </div>
-         } */}
         {
           preview && (
             <div className='preview-bg relative p-4 min-h-16 bg-blue-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100'>

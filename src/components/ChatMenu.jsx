@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 function ChatMenu({ children }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const handleLogout = async () => {
+    const handleLogout = () => {
         toast.loading("loading...", {
             id: "loading-toast",
             position: "top-right",
@@ -22,7 +22,7 @@ function ChatMenu({ children }) {
             localStorage.removeItem('user-info');
             localStorage.removeItem('selectedKey');
 
-            await dispatch(reset());  // Await the reset action
+            dispatch(reset());  // Await the reset action
 
             toast.dismiss("loading-toast");
             toast.success("Logout successful", {

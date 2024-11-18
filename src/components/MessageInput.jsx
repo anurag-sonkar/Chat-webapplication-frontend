@@ -30,6 +30,7 @@ function MessageInput({ showEmojiPicker, setShowEmojiPicker , setLoading }) {
     // console.log(attachments)
 
     const handleMessageInput = (e) => {
+        setShowEmojiPicker(false)
         const message = e.target.value
         setMessage(message)
 
@@ -113,8 +114,8 @@ function MessageInput({ showEmojiPicker, setShowEmojiPicker , setLoading }) {
     return (
         <form className='bg-[#F0F2F5] flex items-center px-4 py-2' onSubmit={handleSendMessage} >
             <div className='flex gap-3 pr-2'>
-                <div className='relative cursor-pointer' onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-                    <FaFaceSmile size={25} />
+                <div className='relative cursor-pointer'>
+                    <span onClick={() => setShowEmojiPicker(!showEmojiPicker)}><FaFaceSmile size={25} /></span>
                     {showEmojiPicker && (
                         <div className="absolute bottom-10">
                             <EmojiPicker onEmojiClick={handleEmojiClick} /> {/* Emoji Picker Component */}

@@ -43,7 +43,6 @@ function MessageAttachments({ setAttachments, open, setOpen }) {
             </button>
             {open && (
                 <div className='absolute flex flex-col gap-2 bottom-10 left-0 bg-white p-2 shadow-md rounded-md w-44'>
-                    {/* Replace FloatButtons with normal buttons or icons */}
                     {/* image select */}
                     <div>
                         <input type='file' accept='image/*' id='images' className='hidden' onChange={(e)=>handleAttachmentSelect(e)}/>
@@ -68,19 +67,6 @@ function MessageAttachments({ setAttachments, open, setOpen }) {
                             <p className='font-semibold text-sm'>Video</p>
                         </label>
                     </div>
-                    
-                    {/* <button className="p-2 hover:bg-gray-100 rounded-lg flex gap-3 items-center">
-                        <FaFileVideo size={20}/>
-                        <p className='font-semibold text-sm'>Video</p>
-                    </button>
-                    <button className="p-2 hover:bg-gray-100 rounded-lg flex gap-3 items-center">
-                        <FaImage size={20}/>
-                        <p className='font-semibold text-sm'>Image</p>
-                    </button>
-                    <button className="p-2 hover:bg-gray-100 rounded-lg flex gap-3 items-center">
-                        <FaFileAlt size={20}/>
-                        <p className='font-semibold text-sm'>File</p>
-                    </button> */}
                 </div>
             )}
         </div>
